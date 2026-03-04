@@ -1,0 +1,20 @@
+import { prisma } from '@/lib/prisma'
+
+export async function registrarPago(pago: any) {
+    const data = await prisma.payment.create({
+        data: {
+            booking_id: pago.bookingId,
+            user_id: pago.userId,
+            customer_id: pago.customerId,
+            amount: pago.amount,
+            total: pago.total,
+            discount: pago.discount || 0,
+            payment_method: pago.paymentMethod,
+            status: pago.status || 'PENDING',
+            customer_name_snapshot: pago.customerName,
+            customer_dni_snapshot: pago.customerDNI,
+        },
+    })
+
+    return data
+}

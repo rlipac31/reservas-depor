@@ -1,0 +1,542 @@
+{
+  "collections": {
+    "bd-reservas-online.bookings": {
+      "ns": "bd-reservas-online.bookings",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "__v",
+          "businessId",
+          "createdAt",
+          "customerDNI",
+          "customerName",
+          "durationInMinutes",
+          "endTime",
+          "fieldId",
+          "startTime",
+          "state",
+          "totalPrice",
+          "updatedAt",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "businessId": {
+            "bsonType": "objectId"
+          },
+          "createdAt": {
+            "bsonType": "date"
+          },
+          "customerDNI": {
+            "bsonType": "string"
+          },
+          "customerName": {
+            "bsonType": "string"
+          },
+          "durationInMinutes": {
+            "bsonType": "int"
+          },
+          "endTime": {
+            "bsonType": "date"
+          },
+          "fieldId": {
+            "bsonType": "objectId"
+          },
+          "startTime": {
+            "bsonType": "date"
+          },
+          "state": {
+            "bsonType": "string"
+          },
+          "totalPrice": {
+            "bsonType": "int"
+          },
+          "updatedAt": {
+            "bsonType": "date"
+          },
+          "userId": {
+            "bsonType": "objectId"
+          }
+        }
+      }
+    },
+    "bd-reservas-online.businessconfigs": {
+      "ns": "bd-reservas-online.businessconfigs",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "__v",
+          "businessId",
+          "currency",
+          "language",
+          "slotDuration",
+          "zonaHoraria"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "businessId": {
+            "bsonType": "objectId"
+          },
+          "currency": {
+            "bsonType": "object",
+            "properties": {
+              "code": {
+                "bsonType": "string"
+              },
+              "symbol": {
+                "bsonType": "string"
+              }
+            },
+            "required": [
+              "code",
+              "symbol"
+            ]
+          },
+          "language": {
+            "bsonType": "string"
+          },
+          "slotDuration": {
+            "bsonType": "int"
+          },
+          "zonaHoraria": {
+            "bsonType": "string"
+          }
+        }
+      }
+    },
+    "bd-reservas-online.businesses": {
+      "ns": "bd-reservas-online.businesses",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "description",
+          "name",
+          "slug",
+          "state"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "createdAt": {
+            "bsonType": "date"
+          },
+          "description": {
+            "bsonType": "string"
+          },
+          "name": {
+            "bsonType": "string"
+          },
+          "slug": {
+            "bsonType": "string"
+          },
+          "state": {
+            "bsonType": "bool"
+          },
+          "updatedAt": {
+            "bsonType": "date"
+          }
+        }
+      }
+    },
+    "bd-reservas-online.fields": {
+      "ns": "bd-reservas-online.fields",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "__v",
+          "businessId",
+          "capacity",
+          "createdAt",
+          "description",
+          "isDeleted",
+          "location",
+          "name",
+          "pricePerHour",
+          "state",
+          "updatedAt"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "businessId": {
+            "bsonType": "objectId"
+          },
+          "capacity": {
+            "bsonType": "int"
+          },
+          "createdAt": {
+            "bsonType": "date"
+          },
+          "description": {
+            "bsonType": "string"
+          },
+          "isDeleted": {
+            "bsonType": "bool"
+          },
+          "location": {
+            "bsonType": "string"
+          },
+          "name": {
+            "bsonType": "string"
+          },
+          "pricePerHour": {
+            "bsonType": "int"
+          },
+          "state": {
+            "bsonType": "bool"
+          },
+          "updatedAt": {
+            "bsonType": "date"
+          }
+        }
+      }
+    },
+    "bd-reservas-online.payments": {
+      "ns": "bd-reservas-online.payments",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "__v",
+          "amount",
+          "bookingId",
+          "businessId",
+          "descuento",
+          "dniCustomer",
+          "idCustomer",
+          "nameCustomer",
+          "paymentDate",
+          "paymentMethod",
+          "status",
+          "total",
+          "userId"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "amount": {
+            "bsonType": "int"
+          },
+          "bookingId": {
+            "bsonType": "objectId"
+          },
+          "businessId": {
+            "bsonType": "objectId"
+          },
+          "descuento": {
+            "bsonType": "int"
+          },
+          "dniCustomer": {
+            "bsonType": "string"
+          },
+          "idCustomer": {
+            "bsonType": "objectId"
+          },
+          "nameCustomer": {
+            "bsonType": "string"
+          },
+          "paymentDate": {
+            "bsonType": "date"
+          },
+          "paymentMethod": {
+            "bsonType": "string"
+          },
+          "status": {
+            "bsonType": "string"
+          },
+          "total": {
+            "bsonType": "int"
+          },
+          "userId": {
+            "bsonType": "objectId"
+          }
+        }
+      }
+    },
+    "bd-reservas-online.users": {
+      "ns": "bd-reservas-online.users",
+      "jsonSchema": {
+        "bsonType": "object",
+        "required": [
+          "_id",
+          "businessId",
+          "dni",
+          "email",
+          "name",
+          "password",
+          "role",
+          "state"
+        ],
+        "properties": {
+          "_id": {
+            "bsonType": "objectId"
+          },
+          "__v": {
+            "bsonType": "int"
+          },
+          "businessId": {
+            "bsonType": [
+              "objectId",
+              "string"
+            ]
+          },
+          "createdAt": {
+            "bsonType": "date"
+          },
+          "dni": {
+            "bsonType": "string"
+          },
+          "email": {
+            "bsonType": "string"
+          },
+          "name": {
+            "bsonType": "string"
+          },
+          "password": {
+            "bsonType": "string"
+          },
+          "phone": {
+            "bsonType": "string"
+          },
+          "role": {
+            "bsonType": "string"
+          },
+          "state": {
+            "bsonType": "bool"
+          },
+          "updatedAt": {
+            "bsonType": "date"
+          }
+        }
+      }
+    }
+  },
+  "relationships": [
+    {
+      "id": "b0b7996e-3c8b-4fd0-8a2e-1550c3de1754",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.payments",
+          "fields": [
+            "bookingId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.bookings",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "c9133db6-8463-42a5-9784-052eb7007882",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.bookings",
+          "fields": [
+            "businessId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.businesses",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "a580f4bd-2b5e-4abb-8b82-923781fa83bc",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.businessconfigs",
+          "fields": [
+            "businessId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.businesses",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "31b2b90c-3bc2-4137-be3b-302650e6b929",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.fields",
+          "fields": [
+            "businessId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.businesses",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "a00fe814-da36-49b6-aa7b-12038567c1ea",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.payments",
+          "fields": [
+            "businessId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.businesses",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "c1785060-3bea-4432-9d56-4c029ae57976",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.users",
+          "fields": [
+            "businessId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.businesses",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "c5f173db-bad6-43d9-a834-6cdfdaec7b0c",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.bookings",
+          "fields": [
+            "fieldId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.fields",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "4c9f9211-bb28-4812-8b30-13ee4dc76a22",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.bookings",
+          "fields": [
+            "userId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.users",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "6944c69a-4853-49fa-8ce4-aa44066617a9",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.payments",
+          "fields": [
+            "idCustomer"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.users",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    },
+    {
+      "id": "9f931d6f-545e-4049-a548-81fb6ca34156",
+      "relationship": [
+        {
+          "ns": "bd-reservas-online.payments",
+          "fields": [
+            "userId"
+          ],
+          "cardinality": 1
+        },
+        {
+          "ns": "bd-reservas-online.users",
+          "fields": [
+            "_id"
+          ],
+          "cardinality": 1
+        }
+      ],
+      "isInferred": true
+    }
+  ]
+}

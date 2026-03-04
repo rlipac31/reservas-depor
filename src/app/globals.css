@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  /* Tus colores personalizados */
+  --color-brand-primary: #000814;
+  --color-brand-secondary: #f6f7eb;
+  --color-brand-accent-hover: #ffc300;
+  --color-brand-accent: #ffdd00;
+  --color-brand-white: #fdfffc;
+
+  /* Gradientes modernos para 2026 */
+  --background-image-gradient-main: linear-gradient(135deg, var(--color-brand-primary) 0%, #1a1d1f 100%);
+  --background-image-gradient-accent: linear-gradient(90deg, var(--color-brand-accent) 0%, var(--color-brand-accent-hover) 100%);
+}
+
+/* Reset básico y scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-brand-white);
+  color: var(--color-brand-primary);
+  font-family: 'Inter', sans-serif;
+}

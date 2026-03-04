@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model bookings {
+  id                    String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id               String?    @db.Uuid
+  customer_id           String?    @db.Uuid
+  field_id              String     @db.Uuid
+  start_time            DateTime   @db.Timestamptz(6)
+  end_time              DateTime   @db.Timestamptz(6)
+  duration_minutes      Int
+  total_price           Decimal    @db.Decimal(10, 2)
+  status                BookingStatus @default(PENDING)
+  manual_customer_name  String?
+  manual_customer_dni   String?
+  manual_customer_phone String?
+  created_at            DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at            DateTime   @db.Timestamptz(6)
+  customers             customers? @relation(fields: [customer_id], references: [id])
+  fields                fields     @relation(fields: [field_id], references: [id])
+  users                 users?     @relation(fields: [user_id], references: [id])
+  payments              payments[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model business_profile {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  slug            String   @unique
+  description     String?
+  state           Boolean  @default(true)
+  currency_code   String   @default("USD") @db.VarChar(3)
+  currency_symbol String   @default("$") @db.VarChar(5)
+  language        String   @default("es") @db.VarChar(5)
+  slot_duration   Int      @default(60)
+  timezone        String   @default("UTC")
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model customers {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dni        String?    @unique
+  name       String
+  email      String?    @unique
+  phone      String?
+  state      Boolean    @default(true)
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at DateTime   @db.Timestamptz(6)
+  password   String     @db.VarChar(255)
+  bookings   bookings[]
+  payments   payments[]
+
+
+// index para mejorar la búsqueda por dni o email
+  @@index([dni])
+  @@index([email])
+  @@index([name])
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model fields {
+  id             String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String
+  description    String?
+  capacity       Int        @default(10)
+  price_per_hour Decimal    @db.Decimal(10, 2)
+  location       String?
+  state          Boolean    @default(true)
+  is_deleted     Boolean    @default(false)
+  created_at     DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at     DateTime   @db.Timestamptz(6)
+  bookings       bookings[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+
+enum PaymentMethod {
+  CASH
+  MOVIL
+  CARD_CREDIT
+  CARD_DEBIT
+  TRANFER
+}
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+model payments {
+  id                     String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  payment_reference      String?    @db.VarChar(100)
+  booking_id             String     @db.Uuid
+  user_id                String?    @db.Uuid
+  customer_id            String?    @db.Uuid
+  amount                 Decimal    @db.Decimal(10, 2)
+  total                  Decimal    @db.Decimal(10, 2)
+  discount               Decimal    @default(0) @db.Decimal(10, 2)
+  payment_method         PaymentMethod
+  status                 PaymentStatus @default(PENDING)
+  payment_date           DateTime   @default(now()) @db.Timestamptz(6)
+  customer_name_snapshot String?
+  customer_dni_snapshot  String?
+  bookings               bookings   @relation(fields: [booking_id], references: [id])
+  customers              customers? @relation(fields: [customer_id], references: [id])
+  users                  users?     @relation(fields: [user_id], references: [id])
+
+
+ @@index([payment_reference]) 
+ @@index([customer_dni_snapshot]) 
+ @@index([customer_name_snapshot]) 
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+// 1. Definir los valores permitidos
+enum Role {
+  ADMIN
+  USER
+}
+
+model users {
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  dni        String?
+  email      String     @unique
+  name       String
+  password   String
+  phone      String?
+  
+  // 2. Cambiar 'String' por el nombre del enum 'Role'
+  role       Role       @default(USER) 
+  
+  state      Boolean    @default(true)
+  created_at DateTime   @default(now()) @db.Timestamptz(6)
+  updated_at DateTime   @updatedAt @db.Timestamptz(6) // Tip: usa @updatedAt para que Prisma lo maneje solo
+  bookings   bookings[]
+  payments   payments[]
+}

@@ -1,0 +1,32 @@
+import { prisma } from "@/lib/prisma";
+
+export async function getReservas() {
+    const data = await prisma.booking.findMany({
+        include: {
+            field: true,
+            customer: true,
+            user: true
+        }
+    })
+    return data
+}
+
+export async function createReserva(reserva: any) {
+    const data = await prisma.booking.create({
+        data: {
+            user_id: reserva.userId,
+            customer_id: reserva.customerId,
+            field_id: reserva.fieldId,
+            start_time: new Date(reserva.startTime),
+            end_time: new Date(reserva.endTime),
+            duration_minutes: reserva.durationInMinutes,
+            total_price: reserva.totalPrice,
+            state: reserva.state || 'PENDING',
+            manual_customer_name: reserva.manual_customer_name,
+            manual_customer_dni: reserva.manual_customer_dni,
+            manual_customer_phone: reserva.manual_customer_phone,
+        },
+    })
+
+    return data
+}
