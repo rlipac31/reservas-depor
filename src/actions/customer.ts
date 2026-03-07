@@ -46,32 +46,67 @@ export async function registerCustomerAction(formData: FormData) {
     redirect("/dashboard/clientes?success=account-created");
 }
 
+// export async function getCustomersPaginated(page: string = "1", limit: string = "10") {
+//   try {
+
+
+//      const result = await CustomerService.getAll(
+//       parseInt(page),
+//       parseInt(limit)
+//      );
+    
+//         // Si no tuvo éxito o no hay contenido, mostramos error
+//     if (!result.customers || !result.totalCount || !result.totalPages) {
+//         return  { success:false, error:`${result.error}`};
+//         //return notFound();
+//     }
+
+//     // Quitamos el password antes de enviar al cliente por seguridad
+//     const safeCustomers =result.customers.map(({ password:string, ...customer }) => ({
+//       ...customer,
+//       created_at: customer.created_at.toISOString(),
+//       updated_at: customer.updated_at.toISOString(),
+//     }));
+
+//     return { success: true, data: safeCustomers, meta: { totalCount:result.totalCount, totalPages:result.totalPages, page: parseInt(page) } };
+//   } catch (error: any) {
+//     return { success: false, error: error.message };
+//   }
+// }
+
 export async function getCustomersPaginated(page: string = "1", limit: string = "10") {
   try {
-    // const { customers, totalCount, totalPages } = await CustomerService.getAll(
-    //   parseInt(page), 
-    //   parseInt(limit)
-    // );
-
-     const result = await CustomerService.getAll(
+    const result = await CustomerService.getAll(
       parseInt(page),
       parseInt(limit)
-     );
+    );
     
-        // Si no tuvo éxito o no hay contenido, mostramos error
-    if (!result.customers || !result.totalCount || !result.totalPages) {
-        return  { success:false, error:`${result.error}`};
-        //return notFound();
+    if (!result.customers) {
+        return { success: false, error: result.error || "No se encontraron clientes" };
     }
 
-    // Quitamos el password antes de enviar al cliente por seguridad
-    const safeCustomers =result.customers.map(({ password:string, ...customer }) => ({
+    // CORRECCIÓN AQUÍ:
+    // Extraemos 'password' para que no entre en '...customer'
+    // No necesitamos poner :string aquí adentro.
+    const safeCustomers = result.customers.map(({ password, ...customer }: any) => ({
       ...customer,
-      created_at: customer.created_at.toISOString(),
-      updated_at: customer.updated_at.toISOString(),
+      created_at: customer.created_at instanceof Date 
+        ? customer.created_at.toISOString() 
+        : customer.created_at,
+      updated_at: customer.updated_at instanceof Date 
+        ? customer.updated_at.toISOString() 
+        : customer.updated_at,
     }));
 
-    return { success: true, data: safeCustomers, meta: { totalCount:result.totalCount, totalPages:result.totalPages, page: parseInt(page) } };
+    return { 
+      success: true, 
+      data: safeCustomers, 
+      meta: { 
+        totalCount: result.totalCount, 
+        totalPages: result.totalPages, 
+        page: parseInt(page) 
+      } 
+    };
   } catch (error: any) {
     return { success: false, error: error.message };
   }
