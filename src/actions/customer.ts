@@ -65,7 +65,7 @@ export async function getCustomersPaginated(page: string = "1", limit: string = 
     }
 
     // Quitamos el password antes de enviar al cliente por seguridad
-    const safeCustomers =result.customers.map(({ password, ...customer }) => ({
+    const safeCustomers =result.customers.map(({ password:string, ...customer }) => ({
       ...customer,
       created_at: customer.created_at.toISOString(),
       updated_at: customer.updated_at.toISOString(),
