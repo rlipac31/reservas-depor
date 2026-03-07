@@ -18,24 +18,25 @@ console.warn("id usuario ", id)
     if (session?.role !== 'ADMIN') {
         redirect(`/unauthorized`);
     }
+  const result = await getSearchUserIdAction(id);
 
-    const { success, content, error } = await getSearchUserIdAction(id);
-
-    if (!success || !content) {
-        console.error("Error cargando usuario:", error);
-        return notFound();
-    }
+    // Si no tuvo éxito o no hay contenido, mostramos error
+if (!result.success || !result.content) {
+    console.error("Error:", result.error);
+    return notFound();
+}
     console.warn("usuario");
-    console.table(content);
+   // console.table(content);
 
+ 
   //  Mapeamos los datos para el componente
     const userData = {
-        id: content.id || id,
-        name: content.name || '',
-        email: content.email || '',
-        dni: content.dni || '',
-        phone: content.phone || '',
-        role: content.role || 'USER'
+        id: result.content.id || id,
+        name: result.content.name || '',
+        email: result.content.email || '',
+        dni: result.content.dni || '',
+        phone: result.content.phone || '',
+        role: result.content.role || 'USER'
     };
 
     return (

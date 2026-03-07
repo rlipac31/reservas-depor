@@ -8,6 +8,7 @@ import bcrypt from 'bcryptjs';
 
 // validacion
 import { z } from "zod";
+import { CustomerIdTypeResponse } from "@/types/customer";
 
 //creando campo
 export async function registerCustomerAction(formData: FormData) {
@@ -71,10 +72,13 @@ export async function getCustomersPaginated(page: string = "1", limit: string = 
 export async function getCustomerIdAction(customerId:string) {
   try {
     const data:any = await CustomerService.getById(customerId);
-    const { password, ...resteDeCampos } = data;
+    if (!data) {
+      return { success: false, content: null, error: "Cliente no encontrado" };
+    }
+     const { password, ...resteDeCampos } = data;
 
-    const safeUser = {
-      ...resteDeCampos,
+    const safeCustomer = {
+      ...data,
 // Formateamos las fechas como ya lo estabas haciendo
   created_at: data.created_at.toISOString(),
   updated_at: data.updated_at.toISOString(),
@@ -82,7 +86,7 @@ export async function getCustomerIdAction(customerId:string) {
 
   
 
-    return { success: true, content: data, error: null };
+    return { success: true, content: safeCustomer, error: null };
   } catch (e) {
     return { success: false, content: [], error: e };
   }

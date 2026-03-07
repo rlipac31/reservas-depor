@@ -136,6 +136,10 @@ export async function getUsersPaginated(page: string = "1", limit: string = "10"
 export async function getSearchUserIdAction(userId:string) {
   try {
     const data:any = await UserService.getById(userId);
+
+     if (!data) {
+      return { success: false, content: null, error: "Cliente no encontrado" };
+    }
     const { password, ...resteDeCampos } = data;
 
     const safeUser = {

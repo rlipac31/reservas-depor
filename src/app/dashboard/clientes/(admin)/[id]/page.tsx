@@ -19,22 +19,29 @@ console.warn("id usuario ", id)
         redirect(`/unauthorized`);
     }
 
-    const { success, content, error } = await getCustomerIdAction(id);
+//const { success, content, error } = await getCustomerIdAction(id);
+    const result = await getCustomerIdAction(id);
 
-    if (!success || !content) {
-        console.error("Error cargando usuario:", error);
-        return notFound();
-    }
+    // if (!success || !content) {
+    //     console.error("Error cargando usuario:", error);
+    //     return notFound();
+    // }
+
+    // Si no tuvo éxito o no hay contenido, mostramos error
+if (!result.success || !result.content) {
+    console.error("Error:", result.error);
+    return notFound();
+}
     console.warn("usuario");
    // console.table(content);
 
   //  Mapeamos los datos para el componente
     const customerData = {
-        id: content.id || id,
-        name: content.name || '',
-        email: content.email || '',
-        dni: content.dni || '',
-        phone: content.phone || ''
+        id: result.content.id || id,
+        name: result.content.name || '',
+        email: result.content.email || '',
+        dni: result.content.dni || '',
+        phone: result.content.phone || ''
     };
 
     return (

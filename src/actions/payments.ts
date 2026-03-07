@@ -20,7 +20,7 @@ export async function getPagosConFiltro(
     });
 
     // Serialización de Decimal y Dates
-    const safePayments = payments.map(p => ({
+    const safePayments = payments.map((p:any) => ({
       ...p,
       amount: Number(p.amount),
       total: Number(p.total),
