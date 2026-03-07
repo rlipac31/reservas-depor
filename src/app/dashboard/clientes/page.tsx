@@ -58,9 +58,9 @@ export default async function ClientesPage({
 
       {meta && (
         <PaginationControls
-          totalResults={meta.totalCount}
-          totalPages={meta.totalPages}
-          currentPage={meta.page}
+          totalResults={meta.totalCount as number}
+          totalPages={meta.totalPages as number}
+          currentPage={meta.page as number}
           limit={10}
         />
       )}
