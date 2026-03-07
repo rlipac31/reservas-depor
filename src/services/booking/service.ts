@@ -167,6 +167,7 @@ export const ListBookingWithFilterService = {
       }),
       prisma.bookings.count({ where })
     ]);
+    
 
     return {
       bookings,

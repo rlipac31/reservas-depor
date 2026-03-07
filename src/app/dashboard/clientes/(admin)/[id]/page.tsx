@@ -26,7 +26,7 @@ console.warn("id usuario ", id)
         return notFound();
     }
     console.warn("usuario");
-    console.table(content);
+   // console.table(content);
 
   //  Mapeamos los datos para el componente
     const customerData = {

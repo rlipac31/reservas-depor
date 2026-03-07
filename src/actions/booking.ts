@@ -3,6 +3,7 @@
 import { BookingIdService, BookingService, ListBookingWithFilterService } from "@/services/booking/service";
 import { getSession } from "@/lib/jwt/auth-utils";
 import { revalidatePath } from "next/cache";
+import { any } from "zod";
 
 export async function createBookingAction(formData: any) {
   try {
@@ -52,9 +53,9 @@ export async function getBookingsConPagination(
     });
 
     // Serialización manual de Decimal y Date para Next.js
-    const safeBookings = bookings.map(b => ({
+    const safeBookings = bookings.map((b:any) => ({
       ...b,
-      total_price: b.total_price.toString(),
+      total_price: b.total_price.toString() || 0,
       start_time: b.start_time.toISOString(),
       end_time: b.end_time.toISOString(),
       created_at: b.created_at.toISOString(),
@@ -85,13 +86,7 @@ export async function getBookingsConPagination(
 export async function getReservasPorCampoPorFecha(fieldId: string, date: string) {
   try {
     const data = await ListBookingWithFilterService.getReservationsByFieldAndDate(fieldId, date);
-  //  return { success:true, content: data };
-
-     
-    //    const safeFields = data.map(c => ({
-    //   ...c,
-    //   price_per_hour: Number(c.price_per_hour)
-    // }));
+  
 
       return {
       success: true,
