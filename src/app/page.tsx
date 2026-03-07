@@ -74,7 +74,7 @@ console.table(user);
       </section>
 
       {/* SECTION: BÚSQUEDA RÁPIDA (Opcional pero útil) */}
-      <section className="max-w-7xl mx-auto w-full px-4 -mt-32 relative z-20">
+      {/* <section className="max-w-7xl mx-auto w-full px-4 -mt-32 relative z-20">
         <div className="bg-brand-white p-8 rounded-[2.5rem] shadow-2xl border border-brand-primary/5 flex flex-wrap gap-6 items-end justify-between">
           <div className="flex-1 min-w-[200px]">
             <label className="block text-xs font-bold text-brand-primary/40 uppercase mb-2 ml-1">¿Qué deporte buscas?</label>
@@ -93,7 +93,7 @@ console.table(user);
             Buscar Ahora
           </Button>
         </div>
-      </section>
+      </section> */}
 
       {/* SECTION: LISTADO DE CAMPOS - Grid con Componente Reutilizable */}
       <section className="max-w-7xl mx-auto w-full px-4 pb-20">

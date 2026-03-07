@@ -1,70 +1,79 @@
-import { FiUsers, FiCalendar, FiActivity, FiDollarSign } from "react-icons/fi";
+'use client';
+import { useEffect, useState } from 'react';
+import { RefreshCw, LayoutDashboard } from 'lucide-react';
+import { useUser } from '@/context/UserContext';
+import { getDashboardDataAction } from '@/actions/dashboard'; // Importa el action
+import { DashboardStats } from '@/types/dashboard';
+import {
+    KpiSection,
+    TimelineSection,
+    NextMatchAlert,
+    FieldRankingSection,
+    HeatmapSection
+} from '@/components/dashboard/dashboardComponents';
 
-export default function DashboardPage() {
-  // Datos Ficticios para Visualización
-  const stats = [
-    { label: "Reservas Activas", value: "24", icon: FiCalendar, color: "text-brand-accent" },
-    { label: "Usuarios Totales", value: "1,204", icon: FiUsers, color: "text-blue-500" },
-    { label: "Ocupación hoy", value: "85%", icon: FiActivity, color: "text-green-500" },
-    { label: "Ingresos Mes", value: "S/ 4,500", icon: FiDollarSign, color: "text-brand-accent" },
-  ];
+export default function SoccerDashboard() {
+    const { user } = useUser();
+    const [data, setData] = useState<DashboardStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-  return (
-    <div className="space-y-8 p-4 md:p-8">
-      <header>
-        <h1 className="text-3xl font-black text-brand-primary uppercase tracking-tight">Panel de Control</h1>
-        <p className="text-brand-primary/60 font-medium">Bienvenido de vuelta, Administrador.</p>
-      </header>
+    const currency =  "S/";
 
-      {/* Grid de Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, i) => (
-          <div key={i} className="bg-brand-white p-6 rounded-[2rem] shadow-sm border border-brand-primary/5 hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-2xl bg-brand-secondary/10 ${stat.color}`}>
-                <stat.icon size={24} />
-              </div>
-              <span className="text-xs font-bold text-green-500 bg-green-50 px-2 py-1 rounded-lg">+12%</span>
-            </div>
-            <h3 className="text-brand-primary/40 text-xs font-bold uppercase tracking-widest">{stat.label}</h3>
-            <p className="text-2xl font-black text-brand-primary mt-1">{stat.value}</p>
-          </div>
-        ))}
-      </div>
+    const fetchData = async () => {
+        setLoading(true);
+        const result = await getDashboardDataAction();
+        if (result.success && result.data) {
+            setData(result.data);
+            setError(null);
+        } else {
+            setError(result.error || "Error al conectar");
+        }
+        setLoading(false);
+    };
 
-      {/* Visualización de Datos (Gráfico Simulado con CSS) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 bg-brand-white p-8 rounded-[2.5rem] border border-brand-primary/5 shadow-sm">
-          <h3 className="text-lg font-bold text-brand-primary mb-6">Uso de Canchas (Últimos 7 días)</h3>
-          <div className="flex items-end justify-between h-48 gap-2">
-            {[40, 70, 45, 90, 65, 80, 50].map((height, i) => (
-              <div key={i} className="flex-1 flex flex-col items-center gap-2">
-                <div 
-                  className="w-full bg-brand-accent rounded-t-xl transition-all hover:bg-brand-primary cursor-pointer" 
-                  style={{ height: `${height}%` }}
-                ></div>
-                <span className="text-[10px] font-bold text-brand-primary/30 uppercase">Día {i+1}</span>
-              </div>
-            ))}
-          </div>
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    if (loading) return (
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+            <RefreshCw className="animate-spin text-brand-accent" size={48} />
+            <p className="font-black uppercase animate-pulse">Sincronizando datos...</p>
         </div>
+    );
 
-        {/* Lista de Reservas Recientes */}
-        <div className="bg-brand-white p-8 rounded-[2.5rem] border border-brand-primary/5 shadow-sm">
-          <h3 className="text-lg font-bold text-brand-primary mb-6">Últimas Reservas</h3>
-          <div className="space-y-4">
-            {[1, 2, 3, 4].map((_, i) => (
-              <div key={i} className="flex items-center gap-4 p-3 hover:bg-brand-secondary/5 rounded-2xl transition-colors">
-                <div className="w-10 h-10 rounded-full bg-brand-accent/20 flex items-center justify-center text-brand-accent font-bold">JP</div>
-                <div>
-                  <p className="text-sm font-bold text-brand-primary leading-none">Juan Pérez</p>
-                  <p className="text-xs text-brand-primary/40 mt-1">Cancha Estándar • 18:00</p>
+    if (error || !data) return (
+        <div className="p-8 text-center">
+            <p className="text-red-500 mb-4">{error}</p>
+            <button onClick={fetchData} className="bg-brand-primary text-white px-6 py-2 rounded-xl">Reintentar</button>
+        </div>
+    );
+
+    return (
+        <div className="p-4 md:p-8 space-y-8 max-w-7xl mx-auto">
+            <header className="flex items-center gap-4">
+                <div className="p-3 bg-brand-accent-hover text-brand-primary rounded-2xl shadow-[4px_4px_0px_0px_black]">
+                    <LayoutDashboard size={28} />
                 </div>
-              </div>
-            ))}
-          </div>
+                <div>
+                    <h1 className="text-3xl font-black uppercase">Panel de Control</h1>
+                    <p className="text-gray-500">Bienvenido, {user?.name}</p>
+                </div>
+            </header>
+
+            <KpiSection kpis={data.kpis} currency={currency} />
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                    <TimelineSection bookings={data.timeline} />
+                </div>
+                <div className="space-y-6">
+                    <NextMatchAlert nextMatch={data.proximoPartido} currency={currency} />
+                    <FieldRankingSection ranking={data.rankingCampos} currency={currency} />
+                    <HeatmapSection items={data.mapaCalor} />
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

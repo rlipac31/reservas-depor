@@ -22,12 +22,17 @@ export default function ListaPage() {
 
         // Creamos el FormData para enviarlo al Server Action
         const formData = new FormData(e.currentTarget);
+          console.warn("antes de login")
+            console.log(formData)
         
         try {
             const result:any = await loginAction(formData);
+            
 
             if (result.success) {
                  setUser(result.content)
+                 console.warn("entrooo  datos login")
+                     console.log(formData)
                  console.log("desde login")
                  console.table(user)
                  router.push("/dashboard");
@@ -36,6 +41,8 @@ export default function ListaPage() {
             } else {
                 setError(result.error);
                 setLoading(false);
+                console.warn("no entrooo login")
+            console.log(formData)
                
                 // Si no hay error, el Action debería haber redirigido, 
                 // pero si no, forzamos la entrada al dashboard

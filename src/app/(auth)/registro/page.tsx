@@ -1,6 +1,6 @@
 "use client";
 
-import { registerUserAction } from "@/actions/usuarios";
+import { registerCustomerAction } from "@/actions/customer";
 import Button from "@/components/landing/Button";
 import Link from "next/link";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export default function RegisterPage() {
                 <form
                     action={async (formData) => {
                         setLoading(true);
-                        const result = await registerUserAction(formData);
+                        const result = await registerCustomerAction(formData);
                         if (result?.error) alert(result.error);
                         setLoading(false);
                     }}

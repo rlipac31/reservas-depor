@@ -11,6 +11,8 @@ import { useState } from "react";
 
 export default function SaveClientePage() {
     const [loading, setLoading] = useState(false);
+    console.warn("form data de cliente nuevo")
+    console.log(FormData)
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-brand-secondary/20 py-12 px-4">
