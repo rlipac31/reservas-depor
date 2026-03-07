@@ -110,26 +110,66 @@ export async function registerUserAction(data: any) {
   redirect("/login?success=account-created");
 }
 
+// export async function getUsersPaginated(page: string = "1", limit: string = "10") {
+//   try {
+//     const { users, totalCount, totalPages } = await UserService.getAll(
+//       parseInt(page), 
+//       parseInt(limit)
+//     );
+
+//     // Quitamos el password antes de enviar al cliente por seguridad
+//     const safeUsers = users.map(({ password, ...user }) => ({
+//       ...user,
+//       created_at: user.created_at.toISOString(),
+//       updated_at: user.updated_at.toISOString(),
+//     }));
+
+//     return { success: true, data: safeUsers, meta: { totalCount, totalPages, page: parseInt(page) } };
+//   } catch (error: any) {
+//     return { success: false, error: error.message };
+//   }
+// }
+
+
 export async function getUsersPaginated(page: string = "1", limit: string = "10") {
   try {
+    const pageInt = parseInt(page);
+    const limitInt = parseInt(limit);
+
     const { users, totalCount, totalPages } = await UserService.getAll(
-      parseInt(page), 
-      parseInt(limit)
+      pageInt, 
+      limitInt
     );
 
-    // Quitamos el password antes de enviar al cliente por seguridad
-    const safeUsers = users.map(({ password, ...user }) => ({
+    // Tipamos el objeto dentro del map para que Vercel no se queje
+    const safeUsers = users.map(({ password, ...user }: any) => ({
       ...user,
-      created_at: user.created_at.toISOString(),
-      updated_at: user.updated_at.toISOString(),
+      // Usamos el operador ? o validación de instancia por seguridad
+      created_at: user.created_at instanceof Date 
+        ? user.created_at.toISOString() 
+        : String(user.created_at),
+      updated_at: user.updated_at instanceof Date 
+        ? user.updated_at.toISOString() 
+        : String(user.updated_at),
     }));
 
-    return { success: true, data: safeUsers, meta: { totalCount, totalPages, page: parseInt(page) } };
+    return { 
+      success: true, 
+      data: safeUsers, 
+      meta: { 
+        totalCount, 
+        totalPages, 
+        page: pageInt 
+      } 
+    };
   } catch (error: any) {
-    return { success: false, error: error.message };
+    console.error("Error en getUsersPaginated:", error);
+    return { 
+      success: false, 
+      error: error.message || "Error al obtener usuarios" 
+    };
   }
 }
-
 
 // bsucra usuario y actualizar
 

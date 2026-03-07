@@ -41,7 +41,7 @@ export async function getFields() {
   try {
     const data = await FieldService.getAll();
 
-      const safeFields = data.map(c => ({
+      const safeFields = data.map((c:any) => ({
       ...c,
       price_per_hour: Number(c.price_per_hour)
     }));
