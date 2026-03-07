@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Save, ArrowLeft, Lock, Unlock, Info, MapPin, Loader2, Banknote, Users } from 'lucide-react';
 import { getFieldIdAction, updateFieldAction } from '@/actions/fields';
 import { useUser } from '@/context/UserContext';
-import { Prisma } from "@prisma/client";
+//import { Prisma } from "@prisma/client";
 import { FieldIdResponse } from '@/types/field';
 // ... Interfaz SoccerField y FieldInputProps se mantienen igual
 
