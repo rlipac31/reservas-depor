@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import {
     CheckCircle, Smartphone, Banknote, CreditCard,
-    Loader2, Trash2, Info, ReceiptText, User, BanknoteArrowUp
+    Loader2, Trash2, Info, ReceiptText, User, BanknoteArrowUp,
+    InfoIcon
 } from 'lucide-react';
 import { confirmPaymentAction, cancelPaymentAction  } from '@/actions/payments';
 import dayjs from '@/lib/dayjs/dayjs';
@@ -60,7 +61,7 @@ console.log("Datos recibidos en PagosTable:", datos);
         <div className="relative">
             {/* --- MODAL DE ACCIÓN --- */}
             {pagoSeleccionado && (
-                <div className="fixed inset-0   bg-brand-primary/90 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                <div className="fixed inset-0   bg-brand-primary/90 backdrop-blur-sm z-[100] flex items-center justify-center p-4 ">
                     <div className="bg-white rounded-[2.5rem] max-w-sm w-full overflow-hidden shadow-2xl animate-in zoom-in duration-200">
                         <div className={`p-8 text-center ${tipoAccion === 'CONFIRMAR' ? 'bg-brand-primary' : 'bg-red-600'}`}>
                             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg rotate-3 ${tipoAccion === 'CONFIRMAR' ? 'bg-brand-accent' : 'bg-white'}`}>
@@ -95,10 +96,10 @@ console.log("Datos recibidos en PagosTable:", datos);
             )}
 
             {/* --- TABLA --- */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto ">
                 <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-brand-primary/5 text-brand-primary text-[10px] font-black uppercase tracking-[0.15em]">
+                        <tr className="bg-brand-primary text-brand-accent text-[10px] font-black uppercase tracking-[0.15em]">
                             <th className="px-6 py-5">Cliente & Fecha</th>
                             <th className="px-6 py-5 text-center">Registrado por</th>
                             <th className="px-6 py-5 text-center">Detalle Monto</th>
@@ -110,11 +111,11 @@ console.log("Datos recibidos en PagosTable:", datos);
                     </thead>
                     <tbody className="divide-y divide-brand-primary/5">
                         {datos.map((row) => (
-                            <tr key={row.id} className="hover:bg-brand-secondary/10 transition-colors group">
+                            <tr key={row.id} className="hover:bg-brand-secondary/7  0 transition-colors group">
                                 {/* Cliente / Fecha */}
                                 <td className="px-6 py-5">
                                     <div className="flex flex-col">
-                                        <span className="font-black text-brand-primary text-sm uppercase italic leading-none mb-1 group-hover:text-brand-accent transition-colors">
+                                        <span className="font-black text-brand-primary text-sm uppercase italic leading-none mb-1 group-hover:text-brand-accent-hover transition-colors">
                                             {row.customer_name_snapshot || 'Sin Nombre'}
                                         </span>
                                         <span className="text-[10px] font-bold text-brand-primary/30 uppercase tracking-tighter">
@@ -126,10 +127,10 @@ console.log("Datos recibidos en PagosTable:", datos);
                                 {/* User Creador */}
                                 <td className="px-6 py-5 text-center">
                                     <div className="inline-flex flex-col items-center">
-                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-brand-primary/5 rounded-lg">
+                                        <div className="flex items-center gap-1.5 px-3 py-1 bg-brand-primary rounded-lg">
                                             <User size={12} className="text-brand-accent" />
-                                            <span className="font-black text-[10px] text-brand-primary uppercase">
-                                                {row.users?.name?.split(' ')[0] || 'Sistema'}
+                                            <span className="font-black text-[10px] text-brand-accent ">
+                                                {row.users?.email?.split(' ')[0] || 'Sistema'}
                                             </span>
                                         </div>
                                     </div>
@@ -140,7 +141,7 @@ console.log("Datos recibidos en PagosTable:", datos);
                                     <div className="flex flex-col">
                                         <span className="text-xs font-bold text-brand-primary/60 italic">S/ {Number(row.amount).toFixed(2)}</span>
                                         {Number(row.discount) > 0 && (
-                                            <span className="text-[9px] font-black text-red-500 uppercase">Desc: -S/ {Number(row.discount).toFixed(2)}</span>
+                                            <span className="text-[9px] font-black text-red-500 uppercase">Desc: - %   {Number(row.discount).toFixed(2)}</span>
                                         )}
                                     </div>
                                 </td>
@@ -180,7 +181,7 @@ console.log("Datos recibidos en PagosTable:", datos);
                                             title="Ver Recibo"
                                         >
                                         
-                                            <ReceiptText size={20} />
+                                            <InfoIcon size={26} />
                                         </Link>
 
                                         {row.status === 'PENDING' ? (
@@ -192,7 +193,7 @@ console.log("Datos recibidos en PagosTable:", datos);
                                             </button>
                                         ) : (
                                             <div className="w-8 h-8 flex items-center justify-center text-emerald-500/30">
-                                                <CheckCircle size={18} />
+                                                <CheckCircle size={22} />
                                             </div>
                                         )}
                                     </div>

@@ -1,12 +1,14 @@
 "use client";
 
+import { getUserIdAction } from '@/actions/usuarios';
+import { getSession } from '@/lib/jwt/auth-utils';
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 //import { verifySession as verifySessionAction } from '@/app/actions/auth';
 
 export interface UserData {
-  uid: string;
-  nameUser: string;
-  email?: string;
+  id: string;
+  name: string;
+  email: string;
   role: string;
 //   slug?: string;
 //   businessId?: string;
@@ -38,25 +40,19 @@ export function UserProvider({ children, initialUser }: { children: ReactNode, i
     if (!initialUser) {
       const verifySession = async () => {
         try {
-          // console.log("ejecutando getMe....debtreo del try")
-          const url = `/api-backend/auth/me`;//production
-          // console.log("url desde context", url);
-          const urlLocal = `${process.env.NEXT_PUBLIC_API_URL}/auth/me`;
 
-          // Cambia esto solo para probar si llega al backend
-          const res = await fetch(`${url}`, {
-            method: "GET",
-            credentials: "include",
-          });
-
-          if (res.ok) {
-            const data = await res.json();
-            setUser(data.user);
-            console.log(" user desde del effec context ", res);
-
-          } else {
-            setUser(null);
+          const { success, content}:any = await getUserIdAction()
+          if(success){
+             const dataUser:any ={
+              id:content.id,
+              name:content.name,
+              email:content.email,
+              role:content.role
+             }
+            
+            setUser(dataUser)
           }
+         
         } catch (error) {
           setUser(null);
         } finally {
@@ -67,7 +63,6 @@ export function UserProvider({ children, initialUser }: { children: ReactNode, i
     }
   }, [initialUser]);
 
-  // console.log('user desde user Context page ', user);
 
   return (
     <UserContext.Provider value={{ user, setUser, loading }}>

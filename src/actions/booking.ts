@@ -1,6 +1,6 @@
 "use server";
 
-import { BookingService, ListBookingWithFilterService } from "@/services/booking/service";
+import { BookingIdService, BookingService, ListBookingWithFilterService } from "@/services/booking/service";
 import { getSession } from "@/lib/jwt/auth-utils";
 import { revalidatePath } from "next/cache";
 
@@ -11,12 +11,11 @@ export async function createBookingAction(formData: any) {
 
     // Agregamos el userId de la sesión a los datos
     const result = await BookingService.createWithPayment({
-      ...formData,
-      userId: session.id
+      ...formData
     });
 
-    // revalidatePath("/dashboard/reservas");
-    // revalidatePath("/dashboard/campos");
+     revalidatePath("/dashboard/reservas");
+     revalidatePath("/dashboard/campos");
 
     return { 
       success: true, 
@@ -79,5 +78,79 @@ export async function getBookingsConPagination(
       error: error.message || "Error al obtener reservas",
       meta: { totalResults: 0, totalPages: 0, page: 1, limit: 10 } 
     };
+  }
+}
+
+// lsitando reservas del campo con fecha para edit reservas
+export async function getReservasPorCampoPorFecha(fieldId: string, date: string) {
+  try {
+    const data = await ListBookingWithFilterService.getReservationsByFieldAndDate(fieldId, date);
+  //  return { success:true, content: data };
+
+     
+    //    const safeFields = data.map(c => ({
+    //   ...c,
+    //   price_per_hour: Number(c.price_per_hour)
+    // }));
+
+      return {
+      success: true,
+      results: data.results,
+      metaData: data.metaData,
+      content: data.content
+    };
+  } catch (e) {
+    return { success:false, error: e, data: [] };
+  }
+}
+
+//buscamos reserva por id
+export async function getBookingIdAction(fieldId:string) {
+  try {
+    const data = await BookingIdService.getBookingId(fieldId);
+
+    const safeBookingId = { 
+      ...data,
+       total_price: Number(data.total_price),
+       start_time: data.start_time.toISOString(),
+       end_time:data.end_time.toISOString(),
+       created_at: data.created_at.toISOString(),
+       updated_at:data.updated_at.toISOString()
+      }
+
+    return { success: true, content: safeBookingId, error: null };
+  } catch (e) {
+    return { success: false, content: [], error: e };
+  }
+}
+
+
+//actualizar
+export async function updateBookingAction(id: string, data: any) {
+  try {
+    // 1. Extraer y convertir datos
+        const manual_customer_name = data.customerName;
+        const manual_customer_dni = data.customerDNI;
+        const start_time = data.startTime;
+        const feild_id = data.fieldId;
+      
+  // 2. Ejecutar la actualización
+
+    // 2. Ejecutar la actualización
+    await BookingIdService.updateBooking(id, {
+    //  field_id,
+      manual_customer_name,
+      manual_customer_dni,
+      start_time
+    });
+
+    // 3. Limpiar caché para que el usuario vea el cambio
+    revalidatePath("/dashboard/campos");
+    revalidatePath(`/dashboard/campos/${id}`);
+
+    return { success: true, message: "Campo actualizado correctamente" };
+  } catch (error) {
+    console.error("Error en Action:", error);
+    return { error: "Error al intentar actualizar el campo. Intenta de nuevo." };
   }
 }

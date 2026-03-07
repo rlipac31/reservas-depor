@@ -7,18 +7,20 @@ import { PaginationControls } from '@/components/utils/PaginationControls';
 import { getServerUser } from '@/actions/useServer';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { getSessionServer } from '@/lib/jwt/session';
+import { getSession } from '@/lib/jwt/auth-utils';
 
 export default async function ReservasPage({
   searchParams,
 }: {
   searchParams: Promise<{ filter?: string; date?: string; page?: string; limit?: string }>;
 }) {
-   const user = await getServerUser();
-//   if (!user || (user.role !== 'ADMIN' && user.role !== 'USER')) {
-//     redirect("/unauthorized");
-//   }
+   const user = await getSession();
+  if (!user || (user.role !== 'ADMIN' && user.role !== 'USER')) {
+    redirect("/unauthorized");
+  } 
 
-console.log("user desde page reservas ", user)
+console.log("user desde page reservas °°°°°°°::::   ", user)
 
   const { filter, date, page = "1", limit = "10" } = await searchParams;
   const { data, meta, error } = await getBookingsConPagination(filter, date, page, limit);

@@ -1,3 +1,4 @@
+import { getServerUser } from "@/actions/useServer";
 import Button from "@/components/landing/Button";
 import FieldCard from "@/components/landing/Fieldcard";
 import Footer from "@/components/landing/Footer";
@@ -31,7 +32,11 @@ const CAMPOS_DESTACADOS = [
   }
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+
+    const user = await getServerUser()
+console.log("user desde page root")
+console.table(user);
   return (
    <>
     <Navbar />

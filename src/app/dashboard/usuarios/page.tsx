@@ -2,6 +2,7 @@ import { Users, UserPlus } from 'lucide-react';
 import UserCard from '@/components/usuarios/UserCard';
 import { getUsersPaginated } from '@/actions/usuarios';
 import { PaginationControls } from '@/components/utils/PaginationControls';
+import Link from 'next/link';
 
 export default async function UsuariosPage({
   searchParams,
@@ -28,10 +29,12 @@ export default async function UsuariosPage({
             </p>
           </div>
         </div>
-
-        <button className="flex items-center gap-2 bg-brand-primary text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-brand-accent hover:text-brand-primary transition-all shadow-lg active:scale-95">
+      <Link href={`/dashboard/usuarios/save`}>
+                <button className="flex items-center gap-2 bg-brand-primary text-white px-6 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-brand-accent hover:text-brand-primary transition-all shadow-lg active:scale-95">
           <UserPlus size={18} /> Nuevo Usuario
         </button>
+      </Link>
+
       </header>
 
       {/* Grid de Usuarios */}

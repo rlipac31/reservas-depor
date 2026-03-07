@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight, ListOrdered, Hash } from 'lucide-react';
-
+//import { pag } from '@/types/payment'
 interface Props {
   totalResults: number;
   totalPages:number;

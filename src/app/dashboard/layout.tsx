@@ -9,7 +9,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!session || (session.role !== "ADMIN" && session.role !== "USER")) {
     redirect("/login");
   }
-  console.log("sessin ", session )
+ // console.log("sessin ", session )
 
   return (
     <div className="flex min-h-screen bg-[#F8F9FA]"> {/* Fondo claro para contrastar el Sidebar oscuro */}
@@ -23,7 +23,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
       {/* Área de contenido que SI hace scroll */}
       <div className="flex-1 flex flex-col">
         {/* Un Header superior opcional para dar aire */}
-        <header className="h-20 flex items-center justify-end px-10 bg-white/50 backdrop-blur-md sticky top-0 z-40 border-b border-gray-100">
+        <header className="h-20 flex items-center justify-end px-10 bg-white/50 backdrop-blur-md sticky top-0 z-40 border-b border-gray-200">
           {/* <div>
             <p className="text-brand-primary/40 font-bold uppercase text-xs tracking-widest">Bienvenido de nuevo</p>
             <h1 className="mt-2 text-2xl font-black text-brand-primary capitalize italic">{session.name}</h1>

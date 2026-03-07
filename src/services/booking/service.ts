@@ -2,17 +2,27 @@ import { prisma } from "@/lib/prisma";
 import dayjs from "@/lib/dayjs/dayjs"; // Tu config con TIMEZONE = "America/Lima"
 import { Prisma } from "@prisma/client";
 
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const TIMEZONE = "America/Lima";
+
 export const BookingService = {
   createWithPayment: async (data: any) => {
     const {
       fieldId,
+      userId,
       startTime,
       durationInMinutes,
       paymentMethod,
-      nameCustomer,
-      dniCustomer,
-      phoneCustomer,
-      userId,
+      customer_name_snapshot,
+      customer_dni_snapshot,
+      customer_id,
+      customer_phone,
+      payment_reference,
       discount = 0
     } = data;
 
@@ -55,14 +65,15 @@ export const BookingService = {
         data: {
           user_id: userId,
           field_id: fieldId,
+          customer_id:customer_id,
           start_time: startUTC,
           end_time: endUTC,
           duration_minutes: durationInMinutes,
           total_price: new Prisma.Decimal(total),
           status: (paymentMethod === 'CASH' || paymentMethod === 'MOVIL') ? 'CONFIRMED' : 'PENDING',
-          manual_customer_name: nameCustomer,
-          manual_customer_dni: dniCustomer,
-          manual_customer_phone: phoneCustomer,
+          manual_customer_name: customer_name_snapshot,
+          manual_customer_dni: customer_dni_snapshot,
+          manual_customer_phone: customer_phone,
           updated_at: new Date()
         }
       });
@@ -72,13 +83,14 @@ export const BookingService = {
         data: {
           booking_id: booking.id,
           user_id: userId,
+          customer_id:customer_id,
           amount: new Prisma.Decimal(pricePerHour),
           total: new Prisma.Decimal(total),
           discount: new Prisma.Decimal(discount),
           payment_method: paymentMethod,
           status: booking.status === 'CONFIRMED' ? 'COMPLETED' : 'PENDING',
-          customer_name_snapshot: nameCustomer,
-          customer_dni_snapshot: dniCustomer,
+          customer_name_snapshot: customer_name_snapshot,
+          customer_dni_snapshot: customer_dni_snapshot,
         }
       });
 
@@ -161,5 +173,116 @@ export const ListBookingWithFilterService = {
       totalCount,
       totalPages: Math.ceil(totalCount / limit)
     };
+  },
+
+ getReservationsByFieldAndDate: async (idField: string, date?: string) => {
+  try {
+    // 1. Gestión de Fechas con Day.js (Igual a tu lógica original)
+    const baseDate = date 
+      ? dayjs.tz(date, TIMEZONE) 
+      : dayjs().tz(TIMEZONE);
+
+    if (!baseDate.isValid()) {
+      throw new Error("Formato de fecha inválido. Use YYYY-MM-DD.");
+    }
+
+    // Definimos el rango exacto del día en ISO para Prisma
+    const startOfDay = baseDate.startOf('day').toISOString();
+    const endOfDay = baseDate.endOf('day').toISOString();
+
+    // 2. Consulta con Prisma
+    const bookings = await prisma.bookings.findMany({
+      where: {
+        field_id: idField,
+        status: {
+          not: 'CANCELLED', // $ne en Mongoose es 'not' en Prisma
+        },
+        start_time: {
+          gte: new Date(startOfDay),
+          lte: new Date(endOfDay),
+        },
+      },
+      include: {
+        // En Prisma, 'populate' se hace con 'include' o 'select'
+        fields: {
+          select: {
+            name: true,
+            location: true,
+          },
+        },
+        users: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+      orderBy: {
+        start_time: 'asc', // Orden cronológico
+      },
+    });
+
+    // 3. Respuesta estructurada (Formato similar al que tenías)
+    return {
+      success: true,
+      results: bookings.length,
+      metaData: {
+        requestedDate: baseDate.format('YYYY-MM-DD'),
+        field_id: idField,
+      },
+      content: bookings,
+    };
+
+  } catch (error) {
+    console.error(`[Error getReservationsByField]:`, error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : "Error desconocido",
+      data: []
+    };
   }
+}
+
+
+
 };
+
+
+export const BookingIdService = {
+   getBookingId: async(id: string) =>{
+  try {
+        
+    const booking = await prisma.bookings.findUnique({
+        where: { id: id },
+      });
+      if(!booking){
+        throw new Error("el booking con ese id no exite");
+      } 
+    return booking;
+  } catch (error) {
+    console.error("Error al obtener detalle de pago:", error);
+    throw new Error("No se pudo cargar la información del pago");
+  }
+},
+
+ updateBooking: async(id: string, data: Partial<Prisma.bookingsUpdateInput>) => {
+  try {
+    return await prisma.bookings.update({
+      where: { id },
+      data: {
+        ...data,
+        updated_at: new Date(), // Sincronizamos manualmente si no tienes el trigger
+      },
+    });
+  } catch (error) {
+    console.error("Error en Service updateField:", error);
+    throw new Error("No se pudo actualizar el campo deportivo");
+  }
+}
+
+}
+
+
+
+

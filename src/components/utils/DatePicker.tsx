@@ -30,9 +30,9 @@ export function DatePicker() {
         type="date"
         value={currentDate}
         onChange={handleDateChange}
-        className="border-2 border-brand-gray rounded-xl px-3 py-2 text-xs font-bold outline-none 
-                   focus:border-brand-gold focus:ring-1 focus:ring-brand-gold bg-white 
-                   transition-all shadow-sm text-brand-black cursor-pointer"
+        className="border-2 border-brand-primary/20 rounded-xl px-3 py-2 text-xs font-bold outline-none 
+                   focus:border-brand-accent-hover focus:ring-1 focus:ring-brand-accent bg-white 
+                   transition-all shadow-sm text-brand-primary cursor-pointer"
       />
     </div>
   );

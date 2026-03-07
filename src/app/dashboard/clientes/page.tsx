@@ -1,7 +1,7 @@
 
 
 import { Users, UserPlus } from 'lucide-react';
-import UserCard from '@/components/usuarios/UserCard';
+import CustomerCard from '@/components/customer/CustomerCard';
 import { getCustomersPaginated } from '@/actions/customer';
 import { PaginationControls } from '@/components/utils/PaginationControls';
 
@@ -43,7 +43,7 @@ export default async function ClientesPage({
       {/* Grid de Usuarios */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {success && customers?.map((customer: any) => (
-          <UserCard key={customer.id} user={customer} />
+          <CustomerCard key={customer.id} customer={customer} />
         ))}
       </div>
 

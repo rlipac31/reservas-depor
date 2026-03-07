@@ -4,6 +4,11 @@ import { createCustomer, CustomerService } from "@/services/customer/service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from 'bcryptjs';
+
+
+// validacion
+import { z } from "zod";
+
 //creando campo
 export async function registerCustomerAction(formData: FormData) {
 
@@ -59,6 +64,80 @@ export async function getCustomersPaginated(page: string = "1", limit: string = 
     return { success: false, error: error.message };
   }
 }
+
+
+// bsucra usuario y actualizar
+
+export async function getCustomerIdAction(customerId:string) {
+  try {
+    const data:any = await CustomerService.getById(customerId);
+    const { password, ...resteDeCampos } = data;
+
+    const safeUser = {
+      ...resteDeCampos,
+// Formateamos las fechas como ya lo estabas haciendo
+  created_at: data.created_at.toISOString(),
+  updated_at: data.updated_at.toISOString(),
+    }
+
+  
+
+    return { success: true, content: data, error: null };
+  } catch (e) {
+    return { success: false, content: [], error: e };
+  }
+}
+
+
+
+// Definimos el esquema de validación
+const updateCustomerSchema = z.object({
+  name: z.string().min(3, "El nombre es muy corto").optional(),
+  dni: z.string()
+    .length(8, "El DNI debe tener exactamente 8 dígitos")
+    .regex(/^\d+$/, "El DNI solo puede contener números").optional(),
+  phone: z.string()
+        .length(9, "el numeor de telefono tiene que ser  de 9 digitos")
+        .regex(/^\d+$/, "El DNI solo puede contener números").optional()
+});
+
+
+
+
+export async function updateCustomerAction(id: string, formData: { name: string; phone?: string; dni?: string }) {
+  try {
+
+    const validatedData = updateCustomerSchema.parse(formData);
+
+    // Quitamos campos undefined para no enviarlos a Prisma
+    const cleanData = Object.fromEntries(
+      Object.entries(validatedData).filter(([_, v]) => v !== undefined)
+    );
+    // Aquí podrías agregar validación con Zod
+    await CustomerService.update(id, cleanData);
+
+    // Esto refresca los datos en la pantalla sin recargar la página
+    revalidatePath('/customers'); 
+    
+    return { success: true, message: "Customer actualizado correctamente" };
+ } catch (err: unknown) { // Usamos unknown por seguridad
+    // Verificamos si es un error de Zod de forma explícita
+    if (err instanceof z.ZodError) {
+      // Usamos .issues que es la propiedad estándar de Zod para los errores
+      const firstIssue = err.issues[0];
+      return { 
+        success: false, 
+        message: firstIssue?.message || "Error de validación" 
+      };
+    }
+    console.error("Error updating user:", err);
+    return { success: false, message: "No se pudo actualizar el Customer" };
+  }
+}
+
+
+
+
 // tole state user
 
 export async function toggleCustomerStatusAction(id: string, currentState: boolean) {

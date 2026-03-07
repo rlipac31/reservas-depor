@@ -40,7 +40,13 @@ export async function createFieldAction(data: any) {
 export async function getFields() {
   try {
     const data = await FieldService.getAll();
-    return { success: true, content: data, error: null };
+
+      const safeFields = data.map(c => ({
+      ...c,
+      price_per_hour: Number(c.price_per_hour)
+    }));
+
+    return { success: true, content: safeFields, error: null };
   } catch (e) {
     return { success: false, content: [], error: "Error al cargar campos" };
   }
@@ -59,11 +65,12 @@ export async function getFieldsAdmin() {
 export async function getFieldIdReservations(fieldId: string, date: string) {
   try {
     const data = await FieldService.getReservationsByDay(fieldId, date);
-    return { status: "success", data };
+    return { success:true, content: data };
   } catch (e) {
-    return { status: "error", data: [] };
+    return { status: false, error: e, data: [] };
   }
 }
+
 //cambiar de stado
 export async function toggleStateFieldAction(fieldId: string) {
   try {
@@ -83,7 +90,15 @@ export async function toggleStateFieldAction(fieldId: string) {
 export async function getFieldIdAction(fieldId:string) {
   try {
     const data = await FieldService.getFieldId(fieldId);
-    return { success: true, content: data, error: null };
+
+    const safeFieldId = { 
+      ...data,
+       price_per_hour: Number(data.price_per_hour),
+       created_at: data.created_at.toISOString(),
+       updated_at:data.updated_at.toISOString()
+      }
+
+    return { success: true, content: safeFieldId, error: null };
   } catch (e) {
     return { success: false, content: [], error: e };
   }

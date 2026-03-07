@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import dayjs from '@/lib/dayjs/dayjs';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/context/UserContext';
 //import { cancelBookingAction } from '@/actions/booking';
 
 export default function BookingCard({ booking }: { booking: any }) {
@@ -47,13 +48,16 @@ export default function BookingCard({ booking }: { booking: any }) {
   //   }
   // };
 
+ const { user} = useUser();
+console.table(booking)
+
   return (
     <>
       <div className="w-[90vw] md:w-[16rem] lg:w-[18rem] group bg-white rounded-[0.7rem] border border-brand-primary/5 shadow-sm hover:shadow-xl hover:border-brand-accent/30 transition-all duration-300 overflow-hidden flex flex-col h-full ">
         
         {/* Header de Estado */}
-        <div className={`text-[10px] font-black py-2 px-6 border-b uppercase tracking-[0.2em] transition-colors ${stateStyles[booking.state]}`}>
-          {stateLabels[booking.state] || booking.state}
+        <div className={`text-[10px]  font-black py-3 px-6 border-b uppercase tracking-[0.2em] transition-colors ${stateStyles[booking.status]} `}>
+          {stateLabels[booking.status] || booking.status}
         </div>
 
         <div className="p-6 flex-1 space-y-4">
@@ -61,7 +65,7 @@ export default function BookingCard({ booking }: { booking: any }) {
           <div className="flex justify-between items-start">
             <div className="max-w-[70%]">
               <h3 className="font-black italic text-brand-primary text-[18px] md:text-[14px] lg:text-[16px] uppercase tracking-tighter leading-none group-hover:text-brand-accent transition-colors">
-                {booking.field?.name || "Cancha"}
+                {booking.fields?.name || "Cancha"}
               </h3>
               <p className="flex items-center gap-1 text-brand-primary/40 text-[10px] font-bold uppercase mt-1">
                 <MapPin size={10} /> {booking.field?.location || "Sede Principal"}
@@ -80,7 +84,7 @@ export default function BookingCard({ booking }: { booking: any }) {
               <span className="text-[9px] text-brand-primary/30 font-black uppercase flex items-center gap-1">
                 <Calendar size={10} className="text-brand-accent" /> Fecha
               </span>
-              <p className="text-xs font-bold text-brand-primary">
+              <p className="text-xs font-bold text-brand-primary/80">
                 {dayjs(booking.start_time).format('DD MMM, YYYY')}
               </p>
             </div>
@@ -88,7 +92,7 @@ export default function BookingCard({ booking }: { booking: any }) {
               <span className="text-[9px] text-brand-primary/30 font-black uppercase flex items-center gap-1 justify-end">
                 <Clock size={10} className="text-brand-accent" /> Horario
               </span>
-              <p className="text-xs font-bold text-brand-primary">
+              <p className="text-xs font-bold text-brand-primary/80">
                 {dayjs(booking.start_time).format('HH:mm')} - {dayjs(booking.end_time).format('HH:mm')}
               </p>
             </div>
@@ -123,17 +127,17 @@ export default function BookingCard({ booking }: { booking: any }) {
         </div>
 
         {/* Acciones */}
-        <div className="p-4 bg-brand-secondary/10 flex gap-2">
+        <div className="p-4 bg-brand-secondary/10 flex gap-2 ">
           {booking.status !== 'CANCELLED' && booking.status !== 'COMPLETED' && (
             <>
-              <button
+              {/* <button
                 onClick={() => setShowCancelModal(true)}
-                className="flex-1 py-3 rounded-xl border-2 border-transparent hover:border-red-500 hover:text-red-500 text-brand-primary/30 font-black text-[10px] uppercase transition-all"
+                className="flex-1 py-3 rounded-xl border-2 border-transparent hover:bg-brand-primary hover:text-red-500 text-brand-primary/30 font-black text-[10px] uppercase transition-all"
               >
-                <Trash2 size={14} className="mx-auto" />
-              </button>
+                <Trash2 size={20} className="mx-auto" />
+              </button> */}
               <button
-                onClick={() => router.push(`/dashboard/reservas/edit/${booking.id}`)}
+                onClick={() => router.push(`/dashboard/reservas/${booking.id}`)}
                 className="flex-[3] bg-brand-primary text-white py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-brand-accent hover:text-brand-primary transition-all shadow-md active:scale-95 flex items-center justify-center gap-2"
               >
                 <Edit2 size={12} /> Gestionar

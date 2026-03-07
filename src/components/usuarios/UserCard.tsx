@@ -3,17 +3,44 @@
 import { Mail, Phone, ShieldCheck, User as UserIcon, Power, Edit3 } from 'lucide-react';
 import { toggleUserStatusAction } from '@/actions/usuarios';
 import { useState } from 'react';
+import UserModal from '../utils/UserModal';
+import Link from 'next/link';
 
 export default function UserCard({ user }: { user: any }) {
   const [loading, setLoading] = useState(false);
+    const [modalConfig, setModalConfig] = useState<{isOpen: boolean, mode:'edit' | 'confirm'}>({
+    isOpen: false,
+    mode: 'confirm'
+  });
 
-  const handleToggleStatus = async () => {
+
+
+  
+
+  // const handleToggleStatus = async () => {
+  //   setLoading(true);
+  //   await toggleUserStatusAction(user.id, user.state);
+  //   setLoading(false);
+  // };
+
+ 
+
+    const handleToggleStatus = async () => {
     setLoading(true);
     await toggleUserStatusAction(user.id, user.state);
     setLoading(false);
+    setModalConfig({ ...modalConfig, isOpen: false });
+  };
+
+  const handleEdit = async () => {
+    setLoading(true);
+    // Aquí iría tu server action de edición: await updateUserAction(...)
+    setLoading(false);
+    setModalConfig({ ...modalConfig, isOpen: false });
   };
 
   return (
+   <> 
     <div className="bg-white rounded-[2rem] border border-brand-primary/5 p-6 shadow-sm hover:shadow-xl transition-all group">
       <div className="flex justify-between items-start mb-4">
         <div className={`w-12 h-12 rounded-2xl flex items-center justify-center rotate-3 group-hover:rotate-0 transition-transform ${user.state ? 'bg-brand-accent text-brand-primary' : 'bg-gray-100 text-gray-400'}`}>
@@ -44,7 +71,7 @@ export default function UserCard({ user }: { user: any }) {
         )}
       </div>
 
-      <div className="flex gap-2 mt-auto">
+      {/* <div className="flex gap-2 mt-auto">
         <button 
           onClick={handleToggleStatus}
           disabled={loading}
@@ -56,7 +83,100 @@ export default function UserCard({ user }: { user: any }) {
         <button className="p-3 bg-brand-primary text-white rounded-xl hover:bg-brand-accent hover:text-brand-primary transition-all">
           <Edit3 size={16} />
         </button>
-      </div>
+      </div> */}
+         
+        {/* Solo cambiamos los eventos de los botones al final: */}
+        <div className="flex gap-2 mt-auto">
+          <button 
+            onClick={() => setModalConfig({ isOpen: true, mode: 'confirm' })} // Abrir modal confirmación
+            className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${user.state ? 'bg-red-50 text-red-600 hover:bg-red-600 hover:text-white' : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white'}`}
+          >
+            <Power size={14} />
+            {user.state ? 'Desactivar' : 'Activar'}
+          </button>
+         <Link href={`/dashboard/usuarios/${user.id}`}>
+          <button 
+            //onClick={() => setModalConfig({ isOpen: true, mode: 'edit' })} // Abrir modal edición
+            className="p-3 bg-brand-primary text-white rounded-xl hover:bg-brand-accent hover:text-brand-primary transition-all"
+          >
+            <Edit3 size={16} />
+          </button>
+         </Link> 
+ 
+        </div>
     </div>
+
+     {/* Insertamos el Modal */}
+      <UserModal 
+        isOpen={modalConfig.isOpen}
+        mode={modalConfig.mode}
+        loading={loading}
+        user={user}
+        onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+        onAction={modalConfig.mode === 'confirm' ? handleToggleStatus : handleEdit}
+      />
+    </>
   );
 }
+
+
+/////////////////////
+
+
+
+// function UserCard2({ user }: { user: any }) {
+//   const [loading, setLoading] = useState(false);
+//   const [modalConfig, setModalConfig] = useState<{isOpen: boolean, mode: 'edit' | 'confirm'}>({
+//     isOpen: false,
+//     mode: 'confirm'
+//   });
+
+//   const handleToggleStatus = async () => {
+//     setLoading(true);
+//     await toggleUserStatusAction(user.id, user.state);
+//     setLoading(false);
+//     setModalConfig({ ...modalConfig, isOpen: false });
+//   };
+
+//   const handleEdit = async () => {
+//     setLoading(true);
+//     // Aquí iría tu server action de edición: await updateUserAction(...)
+//     setLoading(false);
+//     setModalConfig({ ...modalConfig, isOpen: false });
+//   };
+
+//   return (
+//     <>
+//       <div className="bg-white rounded-[2rem] border border-brand-primary/5 p-6 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden">
+//         {/* ... (Todo tu código actual del UserCard se mantiene igual) ... */}
+        
+//         {/* Solo cambiamos los eventos de los botones al final: */}
+//         <div className="flex gap-2 mt-auto">
+//           <button 
+//             onClick={() => setModalConfig({ isOpen: true, mode: 'confirm' })} // Abrir modal confirmación
+//             className={`flex-1 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all ${user.state ? 'bg-red-50 text-red-600 hover:bg-red-600 hover:text-white' : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white'}`}
+//           >
+//             <Power size={14} />
+//             {user.state ? 'Desactivar' : 'Activar'}
+//           </button>
+//           <button 
+//             onClick={() => setModalConfig({ isOpen: true, mode: 'edit' })} // Abrir modal edición
+//             className="p-3 bg-brand-primary text-white rounded-xl hover:bg-brand-accent hover:text-brand-primary transition-all"
+//           >
+//             <Edit3 size={16} />
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Insertamos el Modal */}
+//       <UserModal 
+//         isOpen={modalConfig.isOpen}
+//         mode={modalConfig.mode}
+//         user={user}
+//         loading={loading}
+//         onClose={() => setModalConfig({ ...modalConfig, isOpen: false })}
+//         onAction={modalConfig.mode === 'confirm' ? handleToggleStatus : handleEdit}
+//       />
+//     </>
+//   );
+// }

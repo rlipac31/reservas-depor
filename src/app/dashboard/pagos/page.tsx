@@ -1,4 +1,5 @@
-import { CalendarDays, Wallet } from 'lucide-react';
+
+import { DollarSign, Smartphone, Banknote, CreditCard, CalendarDays, Wallet } from 'lucide-react';
 import { getPagosConFiltro } from '@/actions/payments';
 import { DatePicker } from '@/components/utils/DatePicker';
 import { FilterTabs } from '@/components/utils/FilterTabs';
@@ -28,19 +29,45 @@ const payments: dataPaymentType[] = data;
 const paginationData: paginationType = pagination || { totalResults: 0, totalPages: 0, currentPage: 1, limit: 10 };
 
   return (
-    <div className="max-w-[1400px] mx-auto p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
+    <div className="max-w-[1400px] mx-auto p-4 md:p-8 space-y-4 animate-in fade-in duration-500">
         
       
       {/* STAT CARDS - Estilo Pukllay */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard title="Recaudación Total" value={resumen.totalGlobal} icon="💰" color="bg-brand-primary text-brand-accent" />
-        <StatCard title="Pago Móvil / Yape" value={resumen.porYape} icon="📱" color="bg-white border border-brand-primary/10 text-brand-primary" />
+        <StatCard title="Pago Móvil / Yape" value={resumen.porYape} icon="Smartphone" color="bg-white border border-brand-primary/10 text-brand-primary" />
         <StatCard title="Efectivo en Caja" value={resumen.porEfectivo} icon="💵" color="bg-white border border-brand-primary/10 text-brand-primary" />
         <StatCard title="Tarjetas" value={resumen.porTarjeta} icon="💳" color="bg-white border border-brand-primary/10 text-brand-primary" />
-      </div>
+      </div> */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard 
+            title="Recaudación Total" 
+            value={resumen.totalGlobal} 
+            icon={<DollarSign size={30} strokeWidth={3} />} 
+            color="bg-brand-primary text-brand-accent" 
+          />
+          <StatCard 
+            title="Pago Móvil / Yape" 
+            value={resumen.porYape} 
+            icon={<Smartphone size={30} />} 
+            color="bg-white border border-brand-primary/10 text-brand-primary" 
+          />
+          <StatCard 
+            title="Efectivo en Caja" 
+            value={resumen.porEfectivo} 
+            icon={<Banknote size={30} />} 
+            color="bg-white border border-brand-primary/10 text-brand-primary" 
+          />
+          <StatCard 
+            title="Tarjetas" 
+            value={resumen.porTarjeta} 
+            icon={<CreditCard size={30} />} 
+            color="bg-white border border-brand-primary/10 text-brand-primary" 
+          />
+    </div>
 
       <header className="bg-white p-6 rounded-[2.5rem] border border-brand-primary/5 shadow-xl space-y-8">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row  items-center gap-4 ">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-brand-primary rounded-2xl flex items-center justify-center -rotate-3 shadow-lg">
               <Wallet className="text-brand-accent" size={24} />
@@ -54,14 +81,23 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
               </p>
             </div>
           </div>
-          
-          <MethodFilter />
+          <div className='flex flex-col-reverse w-2/3 gap-4'>
+              <div className='mx-auto'>
+                  <MethodFilter  />
+              </div>  
+             
+             <div className=' flex flex-row justify-between items-start'>
+                 <FilterTabs />
+                <DatePicker />  
+             </div>
+          </div>
+       
         </div>
 
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-end border-t border-dashed border-brand-primary/10 pt-6">
-          <FilterTabs />
-          <DatePicker />
-        </div>
+        {/* <div className="flex flex-row md:flex-row gap-4 items-center justify-start lg:justify-between lg:items-end border-t border-dashed border-brand-primary/10 pt-6">
+          
+           
+        </div> */}
       </header>
 
       <div className="bg-white rounded-[2.5rem] border border-brand-primary/5 shadow-sm overflow-hidden">

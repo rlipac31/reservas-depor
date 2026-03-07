@@ -38,6 +38,19 @@ export const createCustomer = async (data: Prisma.customersCreateInput) => {
 
 
 export const CustomerService = {
+// vefificar si dni o email ya esta registrado
+   checkExistingCustomer: async (dni?: string, email?: string) => {
+    return await prisma.customers.findFirst({
+      where: {
+        OR: [
+          ...(dni ? [{ dni }] : []),
+          ...(email ? [{ email }] : []),
+        ],
+      },
+      select: { id: true } // Solo necesitamos saber si existe
+    });
+  },
+  //lista clientes
   getAll: async (page: number = 1, limit: number = 10) => {
     const skip = (page - 1) * limit;
     
@@ -55,6 +68,27 @@ export const CustomerService = {
       totalCount,
       totalPages: Math.ceil(totalCount / limit)
     };
+  },
+
+  // Buscar uncustomer por ID
+  getById: async (id: string) => {
+     if(!id){
+        return { error:"no hay id en la peticion"}
+      }
+    return await prisma.customers.findUnique({
+      where: { id },
+    });
+  },
+
+  // Actualizar datos del usuario
+  update: async (id: string, data: { name?: string; phone?: string; dni?: string; }) => {
+     if(!id){
+        return { error:"no hay id en la peticion"}
+      }
+    return await prisma.customers.update({
+      where: { id },
+      data,
+    });
   },
 
   toggleState: async (id: string, currentState: boolean) => {

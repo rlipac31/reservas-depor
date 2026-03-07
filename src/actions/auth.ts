@@ -43,6 +43,7 @@ export async function loginAction(formData: FormData) {
     id: user.id,
     name: user.name,
     role: user.role,
+    email:user.email
   });
 
   const cookieStore = await cookies();
@@ -54,6 +55,11 @@ export async function loginAction(formData: FormData) {
     path: "/",
   });
 
+  
+
   if (user.role === "ADMIN" || user.role==='USER') redirect("/dashboard");
-  redirect("/login");
+
+    redirect("/login");
+    return { success:true, content:user }
+ 
 }

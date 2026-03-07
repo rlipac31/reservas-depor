@@ -43,7 +43,7 @@ export const CustomerAutocomplete = ({ customers, loading, onSelect }: any) => {
       </label>
 
       <div className="relative group">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-gold">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-accent-hover">
           {loading ? <Loader2 className="animate-spin" size={18} /> : <Search size={18} />}
         </div>
 
@@ -53,9 +53,9 @@ export const CustomerAutocomplete = ({ customers, loading, onSelect }: any) => {
           onChange={(e) => { setQuery(e.target.value); setIsOpen(true); setSelectedIndex(-1); }}
           onFocus={() => setIsOpen(true)}
           placeholder="Escriba nombre o DNI..."
-          className="w-full pl-10 pr-10 py-2.5 bg-brand-black border border-brand-black/20 rounded-xl text-sm 
-                     focus:border-brand-black/10 focus:ring-2 focus:ring-brand-gold/10 outline-none 
-                     transition-all shadow-sm text-brand-white/80 font-medium"
+          className="w-full pl-10 pr-10 py-2.5 bg-brand-secondary border border-brand-secondary/20 rounded-xl text-sm 
+                     focus:border-brand-secondary/10 focus:ring-2 focus:ring-brand-accent-hover/10 outline-none 
+                     transition-all shadow-sm text-brand-primary/80 font-medium"
         />
 
         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
@@ -64,7 +64,7 @@ export const CustomerAutocomplete = ({ customers, loading, onSelect }: any) => {
       </div>
 
       {isOpen && filtered.length > 0 && (
-        <div className="absolute  z-[100] w-full mt-2 bg-brand-black text-brand-white border border-brand-gray/10 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="absolute  z-[100] w-full mt-2 bg-brand-secondary text-brand-primary/70 border border-gray-100 rounded-xl shadow-2xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="max-h-64 overflow-y-auto p-1">
             {filtered.map((c: any, index: number) => (
               <button
@@ -72,17 +72,17 @@ export const CustomerAutocomplete = ({ customers, loading, onSelect }: any) => {
                 type="button"
                 onClick={() => handleSelect(c)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors  text-left
-                  ${selectedIndex === index ? 'text-brand-white bg-brand-gold/20' : 'hover:bg-brand-gold/20'}`}
+                  ${selectedIndex === index ? 'text-brand-primary/70 bg-brand-accent-hover/20' : 'hover:bg-brand-gold/20'}`}
               >
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors
-                  ${selectedIndex === index ? 'bg-brand-gold text-brand-black' : 'bg-brand-black/70 text-brand-gold'}`}>
+                  ${selectedIndex === index ? 'bg-brand-accent-hover text-brand-primary' : 'bg-brand-black/70 text-brand-accent-hover'}`}>
                   <User size={14} />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-bold text-gray-100 leading-none">{c.name}</p>
-                  <p className="text-[11px] text-gray-200 mt-1">DNI: {c.dni}</p>
+                  <p className="text-sm font-bold text-brand-primary/70 leading-none">{c.name}</p>
+                  <p className="text-[11px] text-brand-primary/70 mt-1">DNI: {c.dni}</p>
                 </div>
-                {selectedIndex === index && <Check size={14} className="text-brand-gold" />}
+                {selectedIndex === index && <Check size={14} className="text-brand-accent-hover" />}
               </button>
             ))}
           </div>

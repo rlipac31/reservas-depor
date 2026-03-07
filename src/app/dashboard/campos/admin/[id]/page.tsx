@@ -7,24 +7,13 @@ import { Save, ArrowLeft, Lock, Unlock, Info, MapPin, Loader2, Banknote, Users }
 import { getFieldIdAction, updateFieldAction } from '@/actions/fields';
 import { useUser } from '@/context/UserContext';
 import { Prisma } from "@prisma/client";
+import { FieldIdResponse } from '@/types/field';
 // ... Interfaz SoccerField y FieldInputProps se mantienen igual
-export interface SoccerField {
-    id: string;
-    name: string;
-    description: string | null;
-    location: string | null;
-    capacity: number;
-    price_per_hour: number | Prisma.Decimal | any;
-    is_deleted: boolean;
-    state: boolean;
-    created_at: Date;
-    updated_at: Date;
-} 
 
 
 interface FieldInputProps {
   label: string;
-  name: keyof SoccerField; // Obligamos a que el name sea una llave de SoccerField
+  name: keyof FieldIdResponse; // Obligamos a que el name sea una llave de SoccerField
   value: string | number | undefined;
   icon: React.ReactNode;
   isEditable: boolean;
@@ -45,9 +34,9 @@ const EditCampo = () => {
 
 
   // 1. UNIFICAMOS EL ESTADO: Solo necesitamos "campo"
-  const [campo, setCampo] = useState<any | null>(null);
+  const [campo, setCampo] = useState<FieldIdResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isEditable, setIsEditable] = useState<Partial<Record<keyof SoccerField, boolean>>>({});
+  const [isEditable, setIsEditable] = useState<Partial<Record<keyof FieldIdResponse, boolean>>>({});
   const [saving, setSaving] = useState(false);
   const [mensage, setMensage] = useState('');
 
@@ -58,10 +47,17 @@ const EditCampo = () => {
     const loadField = async () => {
       try {
         const {success, content } = await getFieldIdAction(fieldId); 
-        if (success && content) {
+       if (success && content && !Array.isArray(content)) {
         
-        console.log("conetnt  ", content)
-        setCampo(content);
+        console.log("conetnt field ")
+        console.table(content)
+        // const sanitizedField = {
+        //   ...content,
+        //   description: content?.description ?? "", // Si es null, pon ""
+        //   location: content?.location ?? "",       // Si es null, pon ""
+        //   price_per_hour: Number(content?.price_per_hour), // De Decimal a Number
+        // } as FieldIdResponse;
+       await setCampo(content as FieldIdResponse);
         }
       } catch (error) {
         console.error("Error cargando campo:", error);
@@ -72,7 +68,7 @@ const EditCampo = () => {
     loadField();
   }, [fieldId]);
 
-  const toggleLock = (fieldName: keyof SoccerField) => {
+  const toggleLock = (fieldName: keyof FieldIdResponse) => {
     setIsEditable(prev => ({ 
       ...prev, 
       [fieldName]: !prev[fieldName] 
@@ -84,13 +80,13 @@ const EditCampo = () => {
     const { name, value, type } = e.target;
     const isChecked = (e.target as HTMLInputElement).checked;
 
-    // setCampo(prev => {
-    //   if (!prev) return null;
-    //   return {
-    //     ...prev,
-    //     [name]: type === 'checkbox' ? isChecked : value
-    //   };
-    // });
+    setCampo(prev => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        [name]: type === 'checkbox' ? isChecked : value
+      };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -118,6 +114,9 @@ const EditCampo = () => {
       setSaving(false);
     }
   };
+
+  console.warn("campo data ")
+  console.table(campo)
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-4">

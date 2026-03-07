@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // Importante para redirigir
 import Button from '@/components/landing/Button';
 import { loginAction } from "@/actions/auth";
+import { useUser } from '@/context/UserContext';
 
 export default function ListaPage() {
     const router = useRouter();
@@ -12,6 +13,7 @@ export default function ListaPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+     const { user, setUser } = useUser();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,16 +24,22 @@ export default function ListaPage() {
         const formData = new FormData(e.currentTarget);
         
         try {
-            const result = await loginAction(formData);
+            const result:any = await loginAction(formData);
 
-            if (result?.error) {
+            if (result.success) {
+                 setUser(result.content)
+                 console.log("desde login")
+                 console.table(user)
+                 router.push("/dashboard");
+                 router.refresh();
+                
+            } else {
                 setError(result.error);
                 setLoading(false);
-            } else {
+               
                 // Si no hay error, el Action debería haber redirigido, 
                 // pero si no, forzamos la entrada al dashboard
-                router.push("/dashboard");
-                router.refresh();
+               
             }
         } catch (err) {
             setError("Ocurrió un error inesperado. Inténtalo de nuevo.");

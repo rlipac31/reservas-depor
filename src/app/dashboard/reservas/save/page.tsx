@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import ReservationForm from "@/components/booking/ReservationForm";
 import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
+import { getSession } from '@/lib/jwt/auth-utils';
 
 interface SavePageProps {
   searchParams: {
@@ -16,7 +17,8 @@ interface SavePageProps {
 
 export default async function SaveBookingPage({ searchParams }: SavePageProps) {
 
-
+const session = await getSession();
+//console.table(session);
 
   const { fieldId, date, time } = await searchParams;
 
@@ -119,7 +121,12 @@ export default async function SaveBookingPage({ searchParams }: SavePageProps) {
         {/* Columna Derecha: El Formulario */}
         <div className="lg:col-span-7 order-1 lg:order-2">
           <Suspense fallback={<div className="h-[600px] w-full bg-gray-100 animate-pulse rounded-[2.5rem]" />}>
-            <ReservationForm initialData={initialData} />
+            <ReservationForm 
+              initialData={initialData}
+              role={session?.role as string | undefined}
+              nameUserSession={session?.name as string | undefined}
+              idUserSession={session?.id as string | undefined}
+              />
           </Suspense>
         </div>
 
