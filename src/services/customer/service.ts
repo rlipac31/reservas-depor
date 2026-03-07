@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { success } from "zod";
 
 
 
@@ -52,22 +53,34 @@ export const CustomerService = {
   },
   //lista clientes
   getAll: async (page: number = 1, limit: number = 10) => {
-    const skip = (page - 1) * limit;
-    
-    const [customers, totalCount] = await Promise.all([
-      prisma.customers.findMany({
-        orderBy: { created_at: 'desc' },
-        skip,
-        take: limit,
-      }),
-      prisma.customers.count()
-    ]);
 
-    return {
-      customers,
-      totalCount,
-      totalPages: Math.ceil(totalCount / limit)
-    };
+      try {
+             const skip = (page - 1) * limit;
+    
+        const [customers, totalCount] = await Promise.all([
+              prisma.customers.findMany({
+                orderBy: { created_at: 'desc' },
+                skip,
+                take: limit,
+              }),
+              prisma.customers.count()
+            ]);
+            if(customers && totalCount){
+
+            return {
+              customers,
+              totalCount,
+              totalPages: Math.ceil(totalCount / limit)
+            };
+         }else{
+          return { success:false, error:"erro al cargar datos"}
+         }
+      } catch (error) {
+          return { success:false, error:`erro tipo: ${error}`}
+      }
+
+   
+
   },
 
   // Buscar uncustomer por ID

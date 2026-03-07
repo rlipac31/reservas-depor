@@ -14,7 +14,16 @@ export default async function ClientesPage({
   searchParams: Promise<{ page?: string; limit?: string }>;
 }) {
   const { page = "1", limit = "10" } = await searchParams;
-  const { data: customers, meta, success } = await getCustomersPaginated(page, limit);
+  //const { data: customers, meta, success } = await getCustomersPaginated(page, limit);
+  const result =  await getCustomersPaginated(page, limit);
+  console.warn("resultado ", result);
+
+    if(!result.success){
+      return (<div>NO gargo los datos</div>)
+    }
+     const { success, data:customers, meta } = result;
+
+
 
   return (
     <div className="max-w-[1400px] mx-auto p-4 md:p-8 space-y-8 animate-in fade-in duration-500">
