@@ -62,7 +62,7 @@ export const KpiSection = ({ kpis, currency }: { kpis?: DashboardStats['kpis'], 
 export const TimelineSection = ({ bookings }: { bookings: DashboardStats['timeline'] }) => {
     const TZ = 'America/Lima';
     const hours = Array.from({ length: 16 }, (_, i) => `${String(i + 8).padStart(2, '0')}:00`);
-    const fields = Array.from(new Set(bookings.map(b => b.fieldName)));
+    const fields = Array.from(new Set(bookings?.map((b:any) => b.fieldName)));
 
     return (
         <div className="bg-white rounded-2xl border-2 border-gray-100 p-6 shadow-sm overflow-hidden">
@@ -87,7 +87,7 @@ export const TimelineSection = ({ bookings }: { bookings: DashboardStats['timeli
                                 <div className="w-40 font-bold text-xs text-brand-primary truncate pr-2">{field}</div>
                                 <div className="flex-1 flex gap-1 h-14 bg-gray-50/50 rounded-xl p-1 relative border border-dashed border-gray-200">
                                     {hours.map(hour => {
-                                        const booking = bookings.find(b =>
+                                        const booking = bookings?.find(b =>
                                             b.fieldName === field &&
                                             dayjs(b.startTime).tz(TZ).format('HH:00') === hour
                                         );
@@ -139,7 +139,7 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
 
 
     return (
-        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? 'bg-brand-accent border-brand-primary/60  ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
+        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? 'bg-brand-accent border-brand-accent-hover  ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
             }`}>
 
             <div className="flex justify-between items-start mb-4">
@@ -155,21 +155,21 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
             <h4 className={`text-xl font-black capitalize mb-1 ${isUrgent ? 'text-brand-accent' : 'text-brand-primary'}`}>
                 {nextMatch.customerName}
             </h4>
-            <div className={`text-sm font-bold mb-4 ${isUrgent ? 'text-brand-accent/80 ' : 'text-gray-400'}`}>
+            <div className={`text-sm font-bold mb-4 ${isUrgent ? 'text-brand-primary ' : 'text-brand-primary'}`}>
                 {/* {nextMatch.fieldName} • {(TZ ? dayjs(nextMatch.startTime).tz(TZ) : dayjs(nextMatch.startTime)).format('HH:mm')} hs */}
                 {nextMatch.fieldName} • {dayjs(nextMatch.startTime).format('HH:mm')}
             </div>
 
-            <div className={`p-4 rounded-xl flex items-center justify-between ${isUrgent ? 'bg-brand-gol/50 border border-brand-primary/20  animate-pulse' : 'bg-white/5 border border-white/10'
+            <div className={`p-4 rounded-xl flex items-center justify-between ${isUrgent ? 'bg-brand-accent-hover border border-brand-primary/20   animate-pulse' : 'bg-white/5 border border-white/10'
                 }`}>
-                <div>
-                    <p className="text-[9px] font-black text-brand-secondary uppercase opacity-60">Faltan:</p>
-                    <p className="text-lg font-black text-brand-accent" >{nextMatch.minutosParaInicio} min</p>
+                <div className={`${isUrgent ? 'text-brand-primary': 'text-brand-secondary'}`}>
+                    <p className="text-[9px] font-black  uppercase opacity-60">Faltan:</p>
+                    <p className="text-lg font-black " >{nextMatch.minutosParaInicio} min</p>
                 </div>
                 <button
                     onClick={handleViewDetails}
                     disabled={loading}
-                    className={`px-4 py-2 rounded-lg font-black text-xs transition-transform hover:scale-105 flex items-center gap-2 ${isUrgent ? 'bg-brand-accent text-brand-primary shadow-md' : 'bg-brand-primary text-brand-accent'
+                    className={`px-4 py-2 rounded-lg font-black text-xs transition-transform hover:scale-105 flex items-center gap-2 ${isUrgent ? 'bg-brand-primary text-brand-accent shadow-md' : 'bg-brand-accent text-brand-primary'
                         }`}>
                     {loading ? (
                         <>
@@ -197,6 +197,10 @@ export const FieldRankingSection = ({ ranking, currency }: { ranking: FieldRanki
    // console.table(field)
     console.warn("raniki dashboard")
     console.table(ranking)
+
+    if (ranking.length === 0) {
+    return <p className="text-gray-400 italic">No hay datos de campos aún...</p>;
+}
 
     return (
         <div className="bg-brand-secondary rounded-2xl border-2 border-brand-primary/5 p-6">
@@ -246,6 +250,10 @@ export const HeatmapSection = ({ items }: { items: HeatmapItem[] }) => {
         .sort((a, b) => a - b);
 
     const maxVal = Math.max(...Object.values(totalsByHour), 1);
+
+    if (items.length === 0) {
+    return <p className="text-gray-400 italic">No hay datos de campos aún...</p>;
+}
 
     return (
         <div className="bg-brand-primary rounded-2xl p-6 text-brand-accent-hover shadow-xl">

@@ -30,7 +30,6 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
 
   return (
     <div className="max-w-[1400px] mx-auto p-4 md:p-8 space-y-4 animate-in fade-in duration-500">
-        
       
       {/* STAT CARDS - Estilo Pukllay */}
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -39,7 +38,7 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
         <StatCard title="Efectivo en Caja" value={resumen.porEfectivo} icon="💵" color="bg-white border border-brand-primary/10 text-brand-primary" />
         <StatCard title="Tarjetas" value={resumen.porTarjeta} icon="💳" color="bg-white border border-brand-primary/10 text-brand-primary" />
       </div> */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard 
             title="Recaudación Total" 
             value={resumen.totalGlobal} 

@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
-import { DashboardStats } from "@/types/dashboard";
+import { DashboardStats, HeatmapItem } from "@/types/dashboard";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -11,7 +11,7 @@ export const getAdvancedDashboard = async (): Promise<DashboardStats> => {
   try {
     // 1. Obtener configuración del negocio (Timezone)
     const business = await prisma.business_profile.findFirst();
-    const zonaHoraria = business?.timezone || 'America/Lima';
+    const zonaHoraria ='America/Lima';
 
     // Tiempos de referencia
     const ahora = dayjs().tz(zonaHoraria);
@@ -88,17 +88,33 @@ export const getAdvancedDashboard = async (): Promise<DashboardStats> => {
     })).sort((a, b) => b.totalGenerado - a.totalGenerado);
 
     // 6. Mapa de Calor (Agrupación por Día/Hora)
-    const mapaCalor = todasReservas.reduce((acc: DashboardStats['mapaCalor'], res) => {
-      const m = dayjs(res.start_time).tz(zonaHoraria);
-      const dia = m.day();
-      const hora = m.hour();
+    // const mapaCalor = todasReservas.reduce((acc: DashboardStats['mapaCalor'], res) => {
+    //   const m = dayjs(res.start_time).tz(zonaHoraria);
+    //   const dia = m.day();
+    //   const hora = m.hour();
       
-      const idx = acc.findIndex(i => i.dia === dia && i.hora === hora);
-      if (idx > -1) acc[idx].cantidad++;
-      else acc.push({ dia, hora, cantidad: 1 });
+    //   const idx:number = acc?.findIndex(i => i.dia === dia && i.hora === hora);
+    //   if (idx> -1) acc[idx].cantidad++;
+    //   else acc?.push({ dia, hora, cantidad: 1 });
       
-      return acc;
-    }, []);
+    //   return acc;
+    // 1. Aseguramos que el acumulador (acc) nunca sea undefined
+       const mapaCalor = todasReservas.reduce((acc, res) => {
+        const m = dayjs(res.start_time).tz(zonaHoraria);
+        const dia = m.day();
+        const hora = m.hour();
+        
+        // Buscamos el índice. Acc aquí ya no lleva "?"
+        const idx = acc.findIndex(i => i.dia === dia && i.hora === hora);// si ecuentra el element devuelve -1
+        
+        if (idx > -1) {
+          acc[idx].cantidad++;// si el elemennto no es igual al otro suma sus cantidades
+        } else {
+          acc.push({ dia, hora, cantidad: 1 });
+        }
+        
+        return acc;
+      }, [] as HeatmapItem[]); // <--- Forzamos el tipo aquí para que nunca sea undefined<--- IMPORTANTE: El valor inicial debe ser un array vacío []
 
     return {
       kpis: {

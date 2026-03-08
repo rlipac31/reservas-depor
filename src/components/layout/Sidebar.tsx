@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { GiSoccerField } from "react-icons/gi";
 import { 
-  FiMap, 
-  FiCalendar, 
-  FiCreditCard, 
-  FiUsers, 
-  FiUserCheck, 
-  FiLogOut 
-} from "react-icons/fi";
+  CalendarDays, 
+  CreditCard, 
+  Users, 
+  BookUser, 
+  LayoutDashboard
+} from "lucide-react";
 
 import { logout } from '@/actions/auth';
 
@@ -22,11 +22,12 @@ export default function Sidebar({ userRole }: SidebarProps) {
   const router = useRouter();
 
   const menuItems = [
-    { name: "Campos", href: "/dashboard/campos", icon: FiMap, roles: ["ADMIN", "USER"] },
-    { name: "Reservas", href: "/dashboard/reservas", icon: FiCalendar, roles: ["ADMIN", "USER"] },
-    { name: "Pagos", href: "/dashboard/pagos", icon: FiCreditCard, roles: ["ADMIN"] },
-    { name: "Usuarios", href: "/dashboard/usuarios", icon: FiUsers, roles: ["ADMIN"] },
-    { name: "Clientes", href: "/dashboard/clientes", icon: FiUserCheck, roles: ["ADMIN", "USER"] },
+    { name: "Dashoboard", href: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "USER"] },
+    { name: "Campos", href: "/dashboard/campos", icon: GiSoccerField , roles: ["ADMIN", "USER"] },
+    { name: "Reservas", href: "/dashboard/reservas", icon: CalendarDays, roles: ["ADMIN", "USER"] },
+    { name: "Pagos", href: "/dashboard/pagos", icon: CreditCard, roles: ["ADMIN"] },
+    { name: "Usuarios", href: "/dashboard/usuarios", icon: Users, roles: ["ADMIN"] },
+    { name: "Clientes", href: "/dashboard/clientes", icon: BookUser, roles: ["ADMIN", "USER"] },
   ];
 
  const handleLogout = async()=>{
@@ -75,7 +76,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
         <button 
         onClick={handleLogout}
         className="flex items-center gap-4 px-6 py-4 w-full rounded-2xl font-black text-xs uppercase tracking-widest text-red-400 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20">
-          <FiLogOut className="text-lg" />
+          <BookUser className="text-lg" />
           <span>Cerrar Sesión</span>
         </button>
       </div>
