@@ -18,7 +18,7 @@ export default function SoccerDashboard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const currency =  "S/";
+    const currency ="S/";
 
     const fetchData = async () => {
         setLoading(true);

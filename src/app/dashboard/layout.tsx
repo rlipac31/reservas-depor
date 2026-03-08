@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/jwt/auth-utils";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
+import MobileNavbar from "@/components/layout/MovilNavBar";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session:any = await getSession();
@@ -12,12 +13,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
  // console.log("sessin ", session )
 
   return (
-    <div className="flex min-h-screen bg-[#F8F9FA]"> {/* Fondo claro para contrastar el Sidebar oscuro */}
-      
+   // <div className="flex min-h-screen bg-[#F8F9FA]"> {/* Fondo claro para contrastar el Sidebar oscuro */}
+    <div className="flex flex-col  min-h-screen bg-[#F8F9FA] lg:flex-row min-h-screen">
+       {/* Navbar Superior para Móviles */}
+      <MobileNavbar userRole={session.role} />
       {/* Sidebar fijo a la izquierda */}
       <div className="hidden lg:inline-block">
                <Sidebar userRole={session.role} />
       </div>
+
+     
+
+     
  
       
       {/* Área de contenido que SI hace scroll */}

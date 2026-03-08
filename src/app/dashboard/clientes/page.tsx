@@ -35,7 +35,7 @@ export default async function ClientesPage({
           </div>
           <div>
             <h1 className="text-3xl font-black italic uppercase tracking-tighter text-brand-primary leading-none">
-              Gestión de <span className="text-brand-accent">Personal</span>
+              Gestión de <span className="text-brand-accent">Clientes</span>
             </h1>
             <p className="text-[10px] font-bold text-brand-primary/30 uppercase tracking-[0.2em] mt-1">
               {meta?.totalCount || 0} Usuarios registrados
