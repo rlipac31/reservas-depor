@@ -25,12 +25,12 @@ export function MethodFilter() {
   };
 
   return (
-    <div className="flex bg-brand-primary/5   p-1 rounded-xl">
+    <div className="flex flex-row flex-wrap justify-between bg-brand-primary/5   p-1 rounded-xl">
       {methods.map((m) => (
         <button
           key={m.value}
           onClick={() => handleChange(m.value)}
-          className={`px-4 py-1.5 text-xs font-bold rounded-lg transition-all ${currentMethod === m.value
+          className={`px-1.5 py-0.7 md:px-4 md:py-1.5 text-[10px]  lg:text-xs font-bold rounded-lg transition-all ${currentMethod === m.value
             ? 'bg-brand-primary text-brand-accent-hover shadow-sm'
             : 'text-gray-500 hover:text-brand-black'
             }`}

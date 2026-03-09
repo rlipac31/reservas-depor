@@ -35,7 +35,7 @@ export function FilterTabs() {
           <button
             key={f.value}
             onClick={() => handleFilter(f.value)}
-            className={`px-2 py-1 md:px-4 md:py-2 rounded-lg text-[11px] md:text-xs font-bold transition-all duration-200 ${currentFilter === f.value
+            className={`px-2 py-1 md:px-4 md:py-2 rounded-lg text-[10px] md:text-xs font-bold transition-all duration-200 ${currentFilter === f.value
               ? 'bg-brand-primary text-brand-accent shadow-md scale-105'
               : 'text-gray-500 hover:text-brand-primary hover:bg-white/50'
               }`}

@@ -1,5 +1,5 @@
 
-import { DollarSign, Smartphone, Banknote, CreditCard, CalendarDays, Wallet } from 'lucide-react';
+import { DollarSign, Smartphone, Banknote, CreditCard, CalendarDays, Wallet, HandCoins, PiggyBank, Landmark } from 'lucide-react';
 import { getPagosConFiltro } from '@/actions/payments';
 import { DatePicker } from '@/components/utils/DatePicker';
 import { FilterTabs } from '@/components/utils/FilterTabs';
@@ -20,29 +20,18 @@ export default async function PagosPage({
 
   const { filter, date, method, page = "1", limit = "10" } = await searchParams;
   const { data, pagination, resumen, error } = await getPagosConFiltro(filter, date, method, page, limit);
-//  console.group("Datos de pago");
-//   console.table(data);
-//   console.table(resumen)
-//   console.info("paginacion ", pagination)
-// console.groupEnd();
+
 const payments: dataPaymentType[] = data;
 const paginationData: paginationType = pagination || { totalResults: 0, totalPages: 0, currentPage: 1, limit: 10 };
 
   return (
     <div className="max-w-[1400px] mx-auto p-4 md:p-8 space-y-4 animate-in fade-in duration-500">
       
-      {/* STAT CARDS - Estilo Pukllay */}
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard title="Recaudación Total" value={resumen.totalGlobal} icon="💰" color="bg-brand-primary text-brand-accent" />
-        <StatCard title="Pago Móvil / Yape" value={resumen.porYape} icon="Smartphone" color="bg-white border border-brand-primary/10 text-brand-primary" />
-        <StatCard title="Efectivo en Caja" value={resumen.porEfectivo} icon="💵" color="bg-white border border-brand-primary/10 text-brand-primary" />
-        <StatCard title="Tarjetas" value={resumen.porTarjeta} icon="💳" color="bg-white border border-brand-primary/10 text-brand-primary" />
-      </div> */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <StatCard 
             title="Recaudación Total" 
             value={resumen.totalGlobal} 
-            icon={<DollarSign size={30} strokeWidth={3} />} 
+            icon={<HandCoins size={35} strokeWidth={1.5} />} 
             color="bg-brand-primary text-brand-accent" 
           />
           <StatCard 
@@ -65,14 +54,14 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
           />
     </div>
 
-      <header className="bg-white p-6 rounded-[2.5rem] border border-brand-primary/5 shadow-xl space-y-8">
+      <header className="bg-white p-2 lg:p-6 rounded-[1.5rem] lg:rounded-[2.5rem] border border-brand-primary/5 shadow-xl space-y-8">
         <div className="flex flex-col md:flex-row  items-center gap-4 ">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-brand-primary rounded-2xl flex items-center justify-center -rotate-3 shadow-lg">
-              <Wallet className="text-brand-accent" size={24} />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-brand-primary rounded-2xl flex items-center justify-center -rotate-3 shadow-lg">
+              <Wallet className="text-brand-accent" size={22} />
             </div>
             <div>
-              <h1 className="text-3xl font-black italic uppercase tracking-tighter text-brand-primary leading-none">
+              <h1 className="text-xl md:text-2xl  font-black italic uppercase tracking-tighter text-brand-primary leading-none">
                 Control de <span className="text-brand-accent">Caja</span>
               </h1>
               <p className="text-[10px] font-bold text-brand-primary/30 uppercase tracking-[0.2em] mt-1">
@@ -80,16 +69,23 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
               </p>
             </div>
           </div>
-          <div className='flex flex-col-reverse w-2/3 gap-4'>
-              <div className='mx-auto'>
-                  <MethodFilter  />
-              </div>  
-             
-             <div className=' flex flex-row justify-between items-start'>
-                 <FilterTabs />
-                <DatePicker />  
-             </div>
-          </div>
+        
+          {/* Contenedor de filtros corregido */}
+  
+        <div className='flex flex-col-reverse w-full  lg:w-2/3 gap-2 lg:gap-4 '>
+            {/* Filtro de Método */}
+          <div className='w-full overflow-hidden'>
+                <MethodFilter />
+            </div>  
+          
+            {/* Tabs y DatePicker */}
+            <div className='flex gap-2 justify-between md:gap-4 md:flex-row  items-center'>
+              <FilterTabs />
+              <DatePicker />  
+            </div>
+        </div>
+
+         
        
         </div>
 
@@ -99,7 +95,7 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
         </div> */}
       </header>
 
-      <div className="bg-white rounded-[2.5rem] border border-brand-primary/5 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[1.5rem] border border-brand-primary/5 shadow-sm overflow-hidden">
         {data.length > 0 ? (
           <PagosTable datos={payments} />
         ) : (
@@ -119,10 +115,10 @@ const paginationData: paginationType = pagination || { totalResults: 0, totalPag
 
 function StatCard({ title, value, icon, color }: any) {
   return (
-    <div className={`p-6 rounded-[2rem] md:border-4 flex items-center justify-between shadow-sm transition-transform hover:scale-[1.02] ${color}`}>
+    <div className={`p-3 lg:p-6 rounded-[1.2rem] lg:rounded-[2rem] flex items-center justify-between shadow-sm transition-transform hover:scale-[1.02] ${color}`}>
       <div>
         <p className="text-[9px] uppercase font-black tracking-[0.2em] opacity-60">{title}</p>
-        <p className="text-2xl font-black italic mt-1">S/ {value.toLocaleString('es-PE', { minimumFractionDigits: 2 })}</p>
+        <p className="text-xl md:text-2xl font-black italic mt-1">S/ {value.toLocaleString('es-PE', { minimumFractionDigits: 2 })}</p>
       </div>
       <div className="text-3xl grayscale-[0.5] opacity-80">{icon}</div>
     </div>

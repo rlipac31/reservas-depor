@@ -12,9 +12,12 @@ export default async function DashboardLayout({ children }: { children: React.Re
   }
  // console.log("sessin ", session )
 
+
+
   return (
    // <div className="flex min-h-screen bg-[#F8F9FA]"> {/* Fondo claro para contrastar el Sidebar oscuro */}
     <div className="flex flex-col  min-h-screen bg-[#F8F9FA] lg:flex-row min-h-screen">
+    {/* //  <div className="flex min-h-screen overflow-x-hidden">  */}
        {/* Navbar Superior para Móviles */}
       <MobileNavbar userRole={session.role} />
       {/* Sidebar fijo a la izquierda */}
@@ -44,6 +47,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         </header>
 
         <main className="p-0 flex-1 ">
+         {/* <main className="flex-1 min-w-0"> */}
           {children}
         </main>
       </div>
