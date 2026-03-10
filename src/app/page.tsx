@@ -50,7 +50,7 @@ console.table(user);
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-8xl font-black text-brand-white mb-6 tracking-tight leading-none">
+          <h1 className="text-5xl md:text-8xl  font-black text-brand-white mb-6 tracking-tight leading-none">
             RESERVA TU <span className="text-transparent bg-clip-text bg-[image:var(--background-image-gradient-accent)]">PASIÓN</span>
           </h1>
           <p className="text-xl md:text-2xl text-brand-secondary/80 mb-10 max-w-2xl mx-auto font-light">

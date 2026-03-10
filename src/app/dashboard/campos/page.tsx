@@ -16,8 +16,8 @@ export default async function CamposPage() {
   // 2. Obtenemos los campos de la base de datos (PostgreSQL)
   const { success, content: fields, error } = await getFields();
 
-console.log("Campos session: ", session );;
-console.log("campos ", fields)
+//console.log("Campos session: ", session );;
+//console.log("campos ", fields)
 
   return (
     // <div className="space-y-10 px-8 ">

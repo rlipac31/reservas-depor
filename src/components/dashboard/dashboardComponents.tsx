@@ -65,27 +65,27 @@ export const TimelineSection = ({ bookings }: { bookings: DashboardStats['timeli
     const fields = Array.from(new Set(bookings?.map((b:any) => b.fieldName)));
 
     return (
-        <div className="bg-white rounded-2xl border-2 border-gray-100 p-6 shadow-sm overflow-hidden">
+        <div className="bg-brand-secondary rounded-2xl border-2 border-brand-secondary p-6 shadow-sm overflow-hidden">
             <div className="flex justify-between items-center mb-6">
                 <h3 className="font-black text-xl text-brand-primary uppercase flex items-center gap-2">
                     <Clock size={20} /> Cronograma de Hoy
                 </h3>
             </div>
 
-            <div className="relative overflow-x-auto">
+            <div className="relative overflow-x-auto bg-brand-primary px-4 py-8 rounded-sm">
                 <div className="min-w-[800px]">
                     <div className="flex border-b border-gray-100 mb-4 pb-2">
-                        <div className="w-40 shrink-0 font-black text-[10px] text-gray-400 uppercase">Cancha / Hora</div>
+                        <div className="w-40 shrink-0 font-black text-[10px] text-brand-accent uppercase">Cancha / Hora</div>
                         {hours.map(hour => (
-                            <div key={hour} className="flex-1 text-center text-[10px] font-bold text-gray-400">{hour}</div>
+                            <div key={hour} className="flex-1 text-center text-[10px] font-bold text-gray-50">{hour}</div>
                         ))}
                     </div>
 
                     <div className="space-y-4">
                         {fields.map(field => (
                             <div key={field} className="flex items-center group">
-                                <div className="w-40 font-bold text-xs text-brand-primary truncate pr-2">{field}</div>
-                                <div className="flex-1 flex gap-1 h-14 bg-gray-50/50 rounded-xl p-1 relative border border-dashed border-gray-200">
+                                <div className="w-40  font-bold text-xs text-brand-accent truncate pr-2">{field}</div>
+                                <div className="flex-1 flex gap-1 h-14 bg-slate-900 rounded-xl p-1 relative border border-dashed  w-[80%] p-1">
                                     {hours.map(hour => {
                                         const booking = bookings?.find(b =>
                                             b.fieldName === field &&
@@ -93,7 +93,7 @@ export const TimelineSection = ({ bookings }: { bookings: DashboardStats['timeli
                                         );
 
                                         return (
-                                            <div key={hour} className={`flex-1 rounded-lg transition-all relative
+                                            <div key={hour} className={`flex-1 w-12 rounded-lg transition-all relative
                                                 ${booking 
                                                     ? (booking.status === 'CONFIRMED' || booking.status === 'COMPLETED' 
                                                         ? 'bg-brand-accent text-brand-primary border-l-4 border-brand-primary/20 shadow-md' 
@@ -139,7 +139,7 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
 
 
     return (
-        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? 'bg-brand-accent border-brand-accent-hover  ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
+        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? ' bg-brand-accent border-brand-accent-hover  ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
             }`}>
 
             <div className="flex justify-between items-start mb-4">

@@ -25,7 +25,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
     { name: "Dashoboard", href: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "USER"] },
     { name: "Campos", href: "/dashboard/campos", icon: GiSoccerField , roles: ["ADMIN", "USER"] },
     { name: "Reservas", href: "/dashboard/reservas", icon: CalendarDays, roles: ["ADMIN", "USER"] },
-    { name: "Pagos", href: "/dashboard/pagos", icon: CreditCard, roles: ["ADMIN"] },
+    { name: "Pagos", href: "/dashboard/pagos", icon: CreditCard, roles:["ADMIN", "USER"] },
     { name: "Usuarios", href: "/dashboard/usuarios", icon: Users, roles: ["ADMIN"] },
     { name: "Clientes", href: "/dashboard/clientes", icon: BookUser, roles: ["ADMIN", "USER"] },
   ];

@@ -8,7 +8,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   // Si no hay sesión o el rol no es válido, fuera.
   if (!session || (session.role !== "ADMIN" && session.role !== "USER")) {
-    redirect("/login");
+    redirect("/unauthorized");
   }
  // console.log("sessin ", session )
 

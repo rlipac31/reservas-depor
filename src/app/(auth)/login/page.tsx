@@ -58,13 +58,13 @@ export default function ListaPage() {
         <section className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-brand-secondary/30 px-4 py-12">
             <div className="w-full max-w-md bg-brand-white rounded-[2.5rem] shadow-2xl border border-brand-primary/5 p-8 md:p-12 overflow-hidden relative">
                 
-                <div className="absolute top-0 left-0 w-full h-2 bg-brand-accent" />
+                <div className="absolute top-0 left-0 w-full h-2 bg-brand-primary" />
 
-                <div className="text-center mb-10">
+                <div className="text-center mb-10 ">
                     <h2 className="text-3xl font-black text-brand-primary tracking-tight uppercase">
                         BIENVENIDO A <span className="text-brand-accent">PUKLLAY</span>
                     </h2>
-                    <p className="text-brand-primary/50 mt-2 font-medium">
+                    <p className="text-brand-primary/60 mt-2 font-medium">
                         Ingresa tus datos para gestionar tus reservas
                     </p>
                 </div>
@@ -110,14 +110,14 @@ export default function ListaPage() {
 
                     <Button
                         type="submit"
-                        variant="accent"
+                        variant="primary"
                         disabled={loading}
                         className="w-full py-4 text-lg mt-4 shadow-xl shadow-brand-accent/20 disabled:opacity-50"
                     >
                         {loading ? "Verificando..." : "Entrar a mi cuenta"}
                     </Button>
                 </form>
-
+{/* 
                 <div className="mt-8 text-center">
                     <p className="text-sm text-brand-primary/60">
                         ¿Aún no tienes cuenta?{' '}
@@ -125,7 +125,7 @@ export default function ListaPage() {
                             Regístrate aquí
                         </Link>
                     </p>
-                </div>
+                </div> */}
             </div>
         </section>
     );

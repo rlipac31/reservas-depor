@@ -11,6 +11,7 @@ import {
     FieldRankingSection,
     HeatmapSection
 } from '@/components/dashboard/dashboardComponents';
+import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
 
 export default function SoccerDashboard() {
     const { user } = useUser();
@@ -43,14 +44,15 @@ export default function SoccerDashboard() {
 
 
 
-    if (loading) return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-        <div className="p-4 bg-white rounded-2xl shadow-[4px_4px_0px_0px_black] border-2 border-black">
-           <RefreshCw className={`text-brand-primary ${loading ? 'animate-spin' : ''}`} size={48} />
-        </div>
-        <p className="font-black uppercase tracking-tighter">Sincronizando con la cancha...</p>
-    </div>
-);
+//     if (loading) return (
+//     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+//         <div className="p-4 bg-white rounded-2xl shadow-[4px_4px_0px_0px_black] border-2 border-black">
+//            <RefreshCw className={`text-brand-primary ${loading ? 'animate-spin' : ''}`} size={48} />
+//         </div>
+//         <p className="font-black uppercase tracking-tighter">Sincronizando con la cancha...</p>
+//     </div>
+// );
+    if(loading)return <DashboardSkeleton/>;
 
     if (error || !data) return (
         <div className="p-8 text-center">
@@ -77,10 +79,10 @@ export default function SoccerDashboard() {
                  <button 
                         onClick={() => fetchData(true)} // Aquí forzamos el refresco
                         disabled={loading}
-                        className="p-3  bg-brand-primary border-2 border-brand-accent-hover rounded-xl hover:bg-gray-100 transition-colors shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
+                        className="p-3  bg-brand-accent border border-brand-accent-hover rounded-xl hover:bg-brand-primary  hover:text-brand-accent-hover transition-colors shadow-[2px_2px_0px_0px_black] active:shadow-none active:translate-x-[2px] active:translate-y-[2px]"
                         title="Actualizar datos (Limpia caché)"
                     >
-                        <RefreshCw className={`text-brand-accent-hover ${loading ? 'animate-spin' : ''}`} size={20} />
+                        <RefreshCw className={`${loading ? 'animate-spin' : ''}`} size={20} />
                     </button>
                
                  

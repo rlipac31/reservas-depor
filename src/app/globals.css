@@ -11,6 +11,9 @@
   /* Gradientes modernos para 2026 */
   --background-image-gradient-main: linear-gradient(135deg, var(--color-brand-primary) 0%, #1a1d1f 100%);
   --background-image-gradient-accent: linear-gradient(90deg, var(--color-brand-accent) 0%, var(--color-brand-accent-hover) 100%);
+
+  /* --font-sans: var(--font-inter); */
+  /* --font-sport: var(--font-kanit); */
 }
 
 /* Reset básico y scroll suave */
