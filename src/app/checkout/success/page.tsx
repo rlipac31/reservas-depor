@@ -173,7 +173,7 @@ function SuccessContent() {
               <p className="text-brand-accent border-brand-accent text-[10px] uppercase font-black tracking-widest">Cancha</p>
               <p className="text-brand-white font-bold">{campo}</p>
               <p className="text-brand-accent border-brand-accent text-[10px] uppercase font-black tracking-widest">Cliente</p>
-              <p className="text-brand-secondary font-medium text-[12px] md:text-[15px]">{cliente} clien</p>
+              <p className="text-brand-secondary font-medium text-[12px] md:text-[15px]">{cliente || 'cliente'} </p>
             </div>
             <ReceiptText size={20} className="text-brand-white/20" />
           </div>
@@ -235,7 +235,7 @@ function SuccessContent() {
         </button>
         <button
           onClick={() => router.push(`/dashboard/campos`)}
-          className="bg-brandborder-brand-accent hover:bg-amber-500 text-brand-black px-4 py-2 rounded-xl mt-4 uppercase font-bold text-[12px]"
+          className="bg-brand-accent border-brand-accent hover:bg-brand-accent-hover text-brand-primary px-4 py-2 rounded-xl mt-4 uppercase font-bold text-[12px]"
         >
           volver a campos
         </button>

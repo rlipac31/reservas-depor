@@ -38,7 +38,7 @@ export default function FieldCard({ field, }: { field: any }) {
     const now = dayjs().tz(TIMEZONE);
     const isToday = selectedDate === todayStr;
 
-    for (let h = 8; h <= 24; h++) {
+    for (let h = 8; h <= 23; h++) {
       const label = `${h.toString().padStart(2, '0')}:00`;
       const isPast = isToday && h <= now.hour();
       const isOccupied = bookings.some(b => dayjs(b.start_time).tz(TIMEZONE).hour() === h);

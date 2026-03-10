@@ -129,7 +129,7 @@ export default function ReservationForm({ initialData, role, nameUserSession, id
                     idPago: String(result.data.payment.id || ''),
                     campo:String(result.data.field.name ||''),
                     precio:String(Number(result.data.field.price_per_hour) || ''),
-                    cliente:String(result.data.payment.name_customer_snapshot || ''),
+                    cliente:String(result.data.payment.customer_name_snapshot || ''),
                     fechaJuego:String(result.data.booking.start_time.toISOString() || ''),
                     inicio:String(result.data.booking.start_time.toISOString() || ''),
                     fin:String(result.data.booking.end_time.toISOString() || ''),
@@ -146,11 +146,11 @@ export default function ReservationForm({ initialData, role, nameUserSession, id
                 const finalUrl = `/checkout/success?${queryString}`;
                 // ✅ Redirección limpia sin slug
               //  setTimeout(() => router.push(`/dashboard/reservas`), 1500);
-                console.log(" url final ", finalUrl)
+                //console.log(" url final ", finalUrl)
+                    handleSuccessVisuals()
+                 setTimeout(()=>router.push(finalUrl), 500)   ;
 
-                router.push(finalUrl);
-
-                handleSuccessVisuals()
+                
             } else {
                 setError(result.error || "Error al procesar");
             }
