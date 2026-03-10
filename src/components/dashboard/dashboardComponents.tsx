@@ -139,11 +139,11 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
 
 
     return (
-        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? 'bg-brand-accent border-brand-primary/60  ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
+        <div className={`rounded-2xl border-2 p-6 transition-all shadow-lg ${isUrgent ? 'bg-brand-accent border-brand-accent-hover/20 ' : 'bg-brand-primary border-brand-accent-hover text-brand-accent'
             }`}>
 
             <div className="flex justify-between items-start mb-4">
-                <div className={`p-2 rounded-xl ${isUrgent ? 'bg-brand-primary text-brand-accent-hover animate-pulse' : 'bg-brand-accent text-brand-primary'}`}>
+                <div className={`p-2 rounded-xl ${isUrgent ? 'bg-brand-primary text-brand-accent-hover animate-pulse' : 'bg-brand-accent text-brand-primary border-4'}`}>
                     <Clock size={20} />
                 </div>
                 <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${isUrgent ? 'bg-brand-accent text-brand-primary' : 'bg-brand-accent text-brand-primary'
@@ -152,19 +152,19 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
                 </div>
             </div>
 
-            <h4 className={`text-xl font-black capitalize mb-1 ${isUrgent ? 'text-brand-accent' : 'text-brand-primary'}`}>
+            <h4 className={`text-xl font-black capitalize mb-1 ${isUrgent ? 'text-brand-primary' : 'text-brand-accent'}`}>
                 {nextMatch.customerName}
             </h4>
-            <div className={`text-sm font-bold mb-4 ${isUrgent ? 'text-brand-accent/80 ' : 'text-gray-400'}`}>
+            <div className={`text-sm font-bold uppercase mb-4 ${isUrgent ? 'text-brand-primary/80 ' : 'text-brand-accent'}`}>
                 {/* {nextMatch.fieldName} • {(TZ ? dayjs(nextMatch.startTime).tz(TZ) : dayjs(nextMatch.startTime)).format('HH:mm')} hs */}
                 {nextMatch.fieldName} • {dayjs(nextMatch.startTime).format('HH:mm')}
             </div>
 
-            <div className={`p-4 rounded-xl flex items-center justify-between ${isUrgent ? 'bg-brand-gol/50 border border-brand-primary/20  animate-pulse' : 'bg-white/5 border border-white/10'
+            <div className={`p-4 rounded-xl flex items-center justify-between ${isUrgent ? 'bg-brand-primary/80 border border-brand-primary/20  animate-pulse' : 'bg-brand-accent border border-white/10'
                 }`}>
                 <div>
                     <p className="text-[9px] font-black text-brand-secondary uppercase opacity-60">Faltan:</p>
-                    <p className="text-lg font-black text-brand-accent" >{nextMatch.minutosParaInicio} min</p>
+                    <p className="text-lg font-black text-brand-secondary" >{nextMatch.minutosParaInicio} min</p>
                 </div>
                 <button
                     onClick={handleViewDetails}

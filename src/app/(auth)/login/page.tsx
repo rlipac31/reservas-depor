@@ -32,7 +32,7 @@ export default function ListaPage() {
             if (result.success) {
                  setUser(result.content)
                  console.warn("entrooo  datos login")
-                     console.log(formData)
+                // console.log(formData)
                  console.log("desde login")
                  console.table(user)
                  router.push("/dashboard");

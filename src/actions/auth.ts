@@ -32,18 +32,20 @@ export async function loginAction(formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  const user = await validateUser(email, password);
+  const result = await validateUser(email, password);
 
-  if (!user) {
-    return { error: "Credenciales incorrectas." };
+  if (!result.success) {
+    return { error: `error tipo: ${result.error}` };
   }
+
+
 
   // Creamos el JWT seguro
   const token = await createToken({
-    id: user.id,
-    name: user.name,
-    role: user.role,
-    email:user.email
+    id: result.userWithoutPassword?.id,
+    name: result.userWithoutPassword?.name,
+    role: result.userWithoutPassword?.role,
+    email:result.userWithoutPassword?.email
   });
 
   const cookieStore = await cookies();
@@ -57,9 +59,9 @@ export async function loginAction(formData: FormData) {
 
   
 
-  if (user.role === "ADMIN" || user.role==='USER') redirect("/dashboard");
+  if (result.userWithoutPassword?.role === "ADMIN" || result.userWithoutPassword?.role==='USER') redirect("/dashboard");
 
-    redirect("/login");
-    return { success:true, content:user }
+    redirect("/campos");
+    return { success:true, content:result.userWithoutPassword }
  
 }
