@@ -15,7 +15,7 @@ export default function Navbar() {
 
                     {/* Menú Desktop */}
                     <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-                        <Link href="/reservas" className="hover:text-brand-accent transition-colors">Reservar</Link>
+                        <Link href="/dasboard/reservas" className="hover:text-brand-accent transition-colors">Reservar</Link>
                         <Link href="#nosotros" className="hover:text-brand-accent transition-colors">Nosotros</Link>
                         <Link href="/login">
                             <Button variant="accent">Iniciar Sesión</Button>

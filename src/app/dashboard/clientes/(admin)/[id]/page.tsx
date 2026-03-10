@@ -22,10 +22,6 @@ console.warn("id usuario ", id)
 //const { success, content, error } = await getCustomerIdAction(id);
     const result = await getCustomerIdAction(id);
 
-    // if (!success || !content) {
-    //     console.error("Error cargando usuario:", error);
-    //     return notFound();
-    // }
 
     // Si no tuvo éxito o no hay contenido, mostramos error
 if (!result.success || !result.content) {

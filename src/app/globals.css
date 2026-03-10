@@ -23,3 +23,29 @@ body {
   color: var(--color-brand-primary);
   font-family: 'Inter', sans-serif;
 }
+
+
+
+@media print {
+  /* Ocultar todo el sitio */
+  body * {
+    visibility: hidden;
+  }
+  /* Mostrar solo el contenedor del ticket */
+  #printable-ticket, #printable-ticket * {
+    visibility: visible;
+  }
+  #printable-ticket {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #e2e8f0; /* Un borde sutil para que se vea el límite del papel */
+  }
+  /* Quitar márgenes de navegador (opcional pero recomendado) */
+  @page {
+    margin: 0;
+  }
+}

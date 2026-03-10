@@ -143,7 +143,7 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
             }`}>
 
             <div className="flex justify-between items-start mb-4">
-                <div className={`p-2 rounded-xl ${isUrgent ? 'bg-brand-primary text-brand-accent-hover animate-pulse' : 'bg-brand-accent text-brand-primary'}`}>
+                <div className={`p-2 rounded-xl ${isUrgent ? 'bg-brand-primary text-brand-accent-hover animate-pulse' : 'bg-brand-accent text-brand-primary border-4'}`}>
                     <Clock size={20} />
                 </div>
                 <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${isUrgent ? 'bg-brand-accent text-brand-primary' : 'bg-brand-accent text-brand-primary'
@@ -152,7 +152,7 @@ export const NextMatchAlert = ({ nextMatch, currency }: { nextMatch: DashboardSt
                 </div>
             </div>
 
-            <h4 className={`text-xl font-black capitalize mb-1 ${isUrgent ? 'text-brand-accent' : 'text-brand-primary'}`}>
+            <h4 className={`text-xl font-black capitalize mb-1 ${isUrgent ? 'text-brand-primary' : 'text-brand-accent'}`}>
                 {nextMatch.customerName}
             </h4>
             <div className={`text-sm font-bold mb-4 ${isUrgent ? 'text-brand-primary ' : 'text-brand-primary'}`}>

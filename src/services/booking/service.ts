@@ -57,15 +57,16 @@ export const BookingService = {
       if (!field || !field.state) throw new Error('Cancha no disponible');
 
       const pricePerHour = Number(field.price_per_hour);
-      const subtotal = pricePerHour * (durationInMinutes / 60);
-      const total = subtotal - (subtotal * (discount / 100));
+      const subtotal = pricePerHour * (Number(durationInMinutes / 60));
+      const total = subtotal - (Number(subtotal * (discount / 100)));
 
       // C. Crear la Reserva
       const booking = await tx.bookings.create({
         data: {
-          user_id: userId,
+          user_id: userId || undefined,//si el usuario es opcional
           field_id: fieldId,
-          customer_id:customer_id,
+          // Si customer_id es opcional en tu esquema, usa null o undefined
+          customer_id: customer_id && customer_id !== "" ? customer_id : null,
           start_time: startUTC,
           end_time: endUTC,
           duration_minutes: durationInMinutes,
@@ -83,7 +84,8 @@ export const BookingService = {
         data: {
           booking_id: booking.id,
           user_id: userId,
-          customer_id:customer_id,
+          // Si customer_id es opcional en tu esquema, usa null o undefined
+          customer_id: customer_id && customer_id !== "" ? customer_id : null,
           amount: new Prisma.Decimal(pricePerHour),
           total: new Prisma.Decimal(total),
           discount: new Prisma.Decimal(discount),
@@ -94,7 +96,7 @@ export const BookingService = {
         }
       });
 
-      return { booking, payment };
+      return { booking, payment, field };
     });
   }
 };

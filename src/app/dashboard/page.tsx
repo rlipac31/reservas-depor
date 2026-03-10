@@ -41,12 +41,7 @@ export default function SoccerDashboard() {
         fetchData();
     }, []);
 
-    // if (loading) return (
-    //     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-    //         <RefreshCw className="animate-spin text-brand-accent" size={48} />
-    //         <p className="font-black uppercase animate-pulse">Sincronizando datos...</p>
-    //     </div>
-    // );
+
 
     if (loading) return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
