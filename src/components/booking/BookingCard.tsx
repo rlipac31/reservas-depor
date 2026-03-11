@@ -49,7 +49,7 @@ export default function BookingCard({ booking }: { booking: any }) {
   // };
 
  const { user} = useUser();
-console.table(booking)
+//console.table(booking)
 
   return (
     <>

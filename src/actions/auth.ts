@@ -4,6 +4,7 @@ import { validateUser } from "@/services/auth.service";
 import { createToken } from "@/lib/jwt/auth-utils"; // Importamos la nueva función
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 
 export async function logout() {
@@ -35,6 +36,7 @@ export async function loginAction(formData: FormData) {
   const result = await validateUser(email, password);
 
   if (!result.success) {
+    redirect("/login");
     return { error: `error tipo: ${result.error}` };
   }
 
@@ -59,9 +61,13 @@ export async function loginAction(formData: FormData) {
 
   
 
-  if (result.userWithoutPassword?.role === "ADMIN" || result.userWithoutPassword?.role==='USER') redirect("/dashboard");
-
-    redirect("/campos");
-    return { success:true, content:result.userWithoutPassword }
+  if (result.userWithoutPassword?.role === "ADMIN" || result.userWithoutPassword?.role==='USER'){
+       //setTimeout(() =>  redirect("/dashboard"), 3000);
+      // redirect(`/dashboard`)
+      revalidatePath(`/dashboard`)
+      return { success:true, content:result.userWithoutPassword }
+  } 
+    redirect("/login");
+  
  
 }

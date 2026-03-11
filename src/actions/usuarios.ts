@@ -90,6 +90,7 @@ export async function registerUserAction(data: any) {
     });
 
    if(res.success){
+    redirect('/dashboard')
     return { success:true}
    } 
    else{

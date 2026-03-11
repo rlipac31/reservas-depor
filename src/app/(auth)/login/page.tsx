@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'; // Importante para redirigir
 import Button from '@/components/landing/Button';
 import { loginAction } from "@/actions/auth";
 import { useUser } from '@/context/UserContext';
+import  { House, User } from 'lucide-react'
 
 export default function ListaPage() {
     const router = useRouter();
@@ -22,8 +23,7 @@ export default function ListaPage() {
 
         // Creamos el FormData para enviarlo al Server Action
         const formData = new FormData(e.currentTarget);
-          console.warn("antes de login")
-            console.log(formData)
+      
         
         try {
             const result:any = await loginAction(formData);
@@ -31,32 +31,38 @@ export default function ListaPage() {
 
             if (result.success) {
                  setUser(result.content)
-                 console.warn("entrooo  datos login")
+               //  console.warn("entrooo  datos login")
                 // console.log(formData)
-                 console.log("desde login")
-                 console.table(user)
-                 router.push("/dashboard");
-                 router.refresh();
+                // console.log("desde login")
+               //  console.table(user)
+                router.push("/dashboard")  ;
+                router.refresh();
+
+              
                 
             } else {
                 setError(result.error);
                 setLoading(false);
-                console.warn("no entrooo login")
-            console.log(formData)
+                //console.warn("no entrooo login")
+          
                
                 // Si no hay error, el Action debería haber redirigido, 
                 // pero si no, forzamos la entrada al dashboard
                
             }
         } catch (err) {
-            setError("Ocurrió un error inesperado. Inténtalo de nuevo.");
+            setError(`erro tipo: ${err}`);
             setLoading(false);
         }
     };
 
     return (
+        <>
+    
         <section className="min-h-[calc(100vh-80px)] flex items-center justify-center bg-brand-secondary/30 px-4 py-12">
+          
             <div className="w-full max-w-md bg-brand-white rounded-[2.5rem] shadow-2xl border border-brand-primary/5 p-8 md:p-12 overflow-hidden relative">
+          
                 
                 <div className="absolute top-0 left-0 w-full h-2 bg-brand-primary" />
 
@@ -78,6 +84,7 @@ export default function ListaPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-2">
+                      
                         <label className="text-xs font-bold text-brand-primary/40 uppercase ml-1">Correo Electrónico</label>
                         <input
                             name="email" // Importante: loginAction busca este nombre
@@ -117,16 +124,28 @@ export default function ListaPage() {
                         {loading ? "Verificando..." : "Entrar a mi cuenta"}
                     </Button>
                 </form>
-{/* 
-                <div className="mt-8 text-center">
+ 
+                {/* <div className="mt-8 text-center">
                     <p className="text-sm text-brand-primary/60">
                         ¿Aún no tienes cuenta?{' '}
                         <Link href="/registro" className="font-bold text-brand-primary hover:text-brand-accent transition-colors">
                             Regístrate aquí
                         </Link>
                     </p>
-                </div> */}
+                       
+                </div>  */}
+                <div className='mt-6 text-center '>
+                         <button
+                         onClick={()=> router.push(`/`)}
+                         className='ml-[42%] flex flex-row p-2  bg-brand-accent-hover text-brand-primary hover:bg-brand-primary hover:text-brand-accent-hover rounded-xl'><House size={28}/>
+                         </button>
+
+                </div>
+
+                
             </div>
+         
         </section>
+        </>
     );
 }

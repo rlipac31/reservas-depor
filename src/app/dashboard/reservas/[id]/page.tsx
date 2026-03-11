@@ -201,12 +201,6 @@ const EditReserva = () => {
     </div>
   );
 
-  // --- MANEJADORES ---
-  // const handleTimeSelection = (hour: number) => {
-  //   // Creamos el nuevo ISO combinando el baseDate con la hora elegida en TZ Lima
-  //   const newStartTime = dayjs.tz(`${baseDate} ${hour}:00`, "YYYY-MM-DD HH:mm", TIMEZONE).toISOString();
-  //   setBooking({ ...booking, start_time: newStartTime });
-  // };
 
   const handleTimeSelection = (hour: number) => {
     // Creamos la nueva fecha basada en el baseDate y la hora elegida
@@ -236,7 +230,7 @@ const EditReserva = () => {
     const result = await updateBookingAction(booking.id, updateData);
 
     if (result.success) {
-      console.log("✅ ¡Excelente! Reserva actualizada.", result); // Aquí puedes usar Sonner o Toast
+     // console.log("✅ ¡Excelente! Reserva actualizada.", result); // Aquí puedes usar Sonner o Toast
       router.push(`/dashboard/reservas`);
       router.refresh();
     } else {
@@ -379,62 +373,7 @@ const EditReserva = () => {
                 </div>
               </div>
 
-              {/* SECCIÓN DERECHA: TIEMPO (Aquí incluimos el TimeGrid mejorado) */}
-              {/* <div className="space-y-6">
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">1. Elegir Fecha</label>
-                  <input
-                    type="date"
-                    value={baseDate}
-                    min={dayjs().tz(TIMEZONE).format('YYYY-MM-DD')}
-                    disabled={!isEditable.time}
-                    onChange={(e) => setBaseDate(e.target.value)}
-                    className="w-full p-4 rounded-2xl border-2 border-brand-primary/20 font-bold text-sm focus:border-brand-accent-hover outline-none"
-                  />
-                </div>
-
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center ">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">2. Bloque Horario</label>
-                    <button type="button" onClick={() => setIsEditable({ ...isEditable, time: !isEditable.time })} className="text-xs font-bold text-brand-accent uppercase underline">
-                      {isEditable.time ? "Fijar Hora" : "Cambiar Hora"}
-                    </button>
-                  </div>
-
-                  {fetchingSlots ? (
-                    <SkeletonSlots />
-                  ) : isEditable.time ? (
-                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                      {getAvailableSlots.map((slot) => (
-                        <button
-                          key={slot.hour}
-                          type="button"
-                          disabled={!slot.available}
-                          onClick={() => handleTimeSelection(slot.hour)}
-                          className={`py-3 rounded-xl border-4 text-[11px] font-black transition-all
-                            ${dayjs(booking.start_time).tz(TIMEZONE).hour() === slot.hour
-                              ? 'bg-brand-primary border-brand-primary text-brand-secondary'
-                              : slot.available
-                                ? 'bg-brand-accent/30 border-brand-accent-hover/70 hover:border-brand-accent text-brand-primary hover:text-white hover:bg-brand-accent'
-                                : 'bg-slate-100 border-indigo-600  text-slate-300 opacity-50 cursor-not-allowed'}`}
-                        >
-                          {slot.label}
-                        </button>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="p-4 bg-brand-black rounded-2xl flex items-center justify-between text-brand-accent border-2 border-brand-accent-hover/20">
-                      <div className="flex items-center gap-3">
-                        <Clock size={16} />
-                        <span className="font-black text-sm uppercase">
-                          {dayjs(booking?.start_time).tz(TIMEZONE).format('hh:00 A')}
-                        </span>
-                      </div>
-                      <span className="text-[9px] font-black opacity-60">CONFIRMADO</span>
-                    </div>
-                  )}
-                </div>
-              </div> */}
+{/* SECTION TIME GRIG */}
 
               <div className="space-y-3">
                  <div className="space-y-3">

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { ShieldAlert, ChevronLeft, Home } from 'lucide-react';
+import { ShieldAlert, ChevronLeft, ChevronRight, Home } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/context/UserContext';
@@ -52,7 +52,15 @@ const UnauthorizedPage = () => {
             className="w-full flex items-center justify-center gap-2 bg-transparent border border-white/10 text-brand-white/50 hover:text-brand-white hover:bg-white/5 font-bold py-4 rounded-2xl transition-all duration-300 text-xs uppercase tracking-widest"
           >
             <ChevronLeft size={16} />
-            Volver atrás
+            Volver Home
+          </button>
+           <button 
+            onClick={() => router.push(`/login`)}
+            className="w-full flex items-center justify-center gap-2 bg-transparent border border-white/10 text-brand-white/50 hover:text-brand-white hover:bg-white/5 font-bold py-4 rounded-2xl transition-all duration-300 text-xs uppercase tracking-widest"
+          >
+              Loguearse
+            <ChevronRight size={16} />
+          
           </button>
         </div>
 

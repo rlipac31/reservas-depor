@@ -21,6 +21,10 @@ export default function SoccerDashboard() {
 
     const currency ="S/";
 
+    console.warn(" user desde  login")
+         console.table(user)
+
+
     const fetchData = async (force = false) => {
         setLoading(true);
         const result:any = await  getDashboardDataAction(force);

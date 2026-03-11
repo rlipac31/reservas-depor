@@ -9,7 +9,7 @@ export async function getServerUser() {
   const allCookies = cookieStore.getAll();
  // console.log("Cookies disponibles en el servidor:", allCookies.map(c => c.name));
 
-  const token = cookieStore.get('token')?.value;
+  const token = cookieStore.get('pukllay_session')?.value;
 
   if (!token) return null;
 
@@ -20,7 +20,7 @@ export async function getServerUser() {
 
 
     const user = {
-      uid: payload?.id,
+      id: payload?.id,
       name: payload?.name,
       email:payload?.email,
       role: payload?.role

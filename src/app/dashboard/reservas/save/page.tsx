@@ -22,7 +22,7 @@ const session = await getSession();
 
   const { fieldId, date, time } = await searchParams;
 
-    console.log("🔍 Parámetros recibidos en el servidor:","filedId", fieldId, date, time);
+   // console.log("🔍 Parámetros recibidos en el servidor:","filedId", fieldId, date, time);
 
   if (!fieldId || !date || !time) {
     console.log("❌ Faltan parámetros, redirigiendo...");
@@ -30,10 +30,6 @@ const session = await getSession();
     // redirect("/dashboard/campos"); 
   }
 
-  // 1. Validaciones básicas de parámetros
-  // if (!fieldId || !date || !time) {
-  //   redirect("/dashboard/campos");
-  // }
 
   // 2. Buscamos la cancha en la DB para tener el precio real y capacidad
  

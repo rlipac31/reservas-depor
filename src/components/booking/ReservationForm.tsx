@@ -45,7 +45,7 @@ export default function ReservationForm({ initialData, role, nameUserSession, id
 
 
 
-    console.warn("usurio tipo: ", user)
+  //  console.warn("usurio tipo: ", user)
 
     // Estado inicial alineado con tu tabla SQL
     const [formData, setFormData] = useState({
@@ -114,14 +114,14 @@ export default function ReservationForm({ initialData, role, nameUserSession, id
         setError('');
 
         try {
-            console.warn("forma data ");
-            console.table(formData)
+           // console.warn("forma data ");
+           // console.table(formData)
             // Invocamos el Server Action (Todo o Nada)
             const result: any = await createBookingAction(formData);
 
             if (result.success) {
-                console.log("Reserva creada: result ");
-                console.table(result)
+              //  console.log("Reserva creada: result ");
+               // console.table(result)
                 handleSuccessVisuals();
                 // Redirección con datos para el ticket
                 const queryParams = {
@@ -164,8 +164,7 @@ export default function ReservationForm({ initialData, role, nameUserSession, id
     // Función que se ejecuta cuando el buscador encuentra un cliente
     // 2. Manejador de selección
     const handleCustomerSelect = (customer: any) => {
-        console.log("customer info......")
-        console.table(customer)
+      
         setFormData(prev => ({
             ...prev,
             customer_name_snapshot: customer.name,

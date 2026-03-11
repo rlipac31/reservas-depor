@@ -67,7 +67,7 @@ export function CamposTable({ datos }: { datos: any[] }) {
 
 
     //{Number(field.price_per_hour).toFixed(2)}
-    console.log("Datos recibidos en CamposTable:", datos);
+   // console.log("Datos recibidos en CamposTable:", datos);
 
 
 const handleDelete = async () => {

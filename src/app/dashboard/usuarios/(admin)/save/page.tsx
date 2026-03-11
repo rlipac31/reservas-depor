@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from 'zod'; 
+import { useRouter } from "next/router";
 
 const usuarioSchema = z.object({
   name: z.string().min(3, "El nombre es muy corto"),
@@ -25,6 +26,7 @@ type UserFormValues = z.infer<typeof usuarioSchema>;
 export default function RegisterPage() {
   const [serverError, setServerError] = useState<string | null>(null);
    // const [error, setError] = useState(string, []);
+   const router= useRouter();
 
   const { register, handleSubmit, setError, formState: { errors, isSubmitting } } = useForm<UserFormValues>({
     resolver: zodResolver(usuarioSchema),
@@ -39,7 +41,8 @@ export default function RegisterPage() {
         setServerError(result?.error);
       } else {
         // Redirigir o mostrar éxito
-        alert("¡Cuenta creada!");
+        router.push(`/dashboard`)
+       // alert("¡Cuenta creada!");
       }
     } catch (error) {
       setServerError("Ocurrió un error inesperado");

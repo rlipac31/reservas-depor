@@ -45,8 +45,7 @@ const EditCampo = () => {
         const {success, content } = await getFieldIdAction(fieldId); 
        if (success && content && !Array.isArray(content)) {
         
-        console.log("conetnt field ")
-        console.table(content)
+
         // const sanitizedField = {
         //   ...content,
         //   description: content?.description ?? "", // Si es null, pon ""
@@ -56,7 +55,7 @@ const EditCampo = () => {
        await setCampo(content as FieldIdResponse);
         }
       } catch (error) {
-        console.error("Error cargando campo:", error);
+       // console.error("Error cargando campo:", error);
       } finally {
         setLoading(false);
       }

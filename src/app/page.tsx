@@ -2,7 +2,7 @@ import { getServerUser } from "@/actions/useServer";
 import Button from "@/components/landing/Button";
 import FieldCard from "@/components/landing/Fieldcard";
 import Footer from "@/components/landing/Footer";
-import Navbar from "@/components/landing/Nabvar";
+import Navbar from "@/components/landing/Navbar";
 
 // Datos ficticios que luego podrás reemplazar con tu API de Supabase
 const CAMPOS_DESTACADOS = [

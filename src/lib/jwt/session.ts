@@ -7,7 +7,7 @@ import { UserData } from "@/context/UserContext";
 export async function getSessionServer(): Promise<UserData | null> {
   try {
     const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const token = cookieStore.get("pukllay_session")?.value;
 
     if (!token) return null;
 

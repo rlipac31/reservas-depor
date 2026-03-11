@@ -18,7 +18,7 @@ export async function validateUser(email: string, pass: string) {
 
     // 3. Verificamos si la cuenta está activa (campo 'state' que tienes en tu schema)
     if (!user.state) {
-      return {success:false, error:`el suuario ${email} esta desabilitado`};
+      return {success:false, error:`el usuario ${email} esta desabilitado`};
     }
 
     // 4. Comparamos la contraseña escrita con el hash guardado

@@ -16,7 +16,7 @@ export default async function ClientesPage({
   const { page = "1", limit = "10" } = await searchParams;
   //const { data: customers, meta, success } = await getCustomersPaginated(page, limit);
   const result =  await getCustomersPaginated(page, limit);
-  console.warn("resultado ", result);
+ // console.warn("resultado ", result);
 
     if(!result.success){
       return (<div>NO gargo los datos</div>)

@@ -20,7 +20,7 @@ export default async function ReservasPage({
     redirect("/unauthorized");
   } 
 
-console.log("user desde page reservas °°°°°°°::::   ", user)
+//console.log("user desde page reservas °°°°°°°::::   ", user)
 
   const { filter, date, page = "1", limit = "10" } = await searchParams;
   const { data, meta, error } = await getBookingsConPagination(filter, date, page, limit);

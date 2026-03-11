@@ -28,7 +28,7 @@ export default function MobileNavbar({ userRole }: NavbarProps) {
   const menuItems = [
     { name: "Campos", href: "/dashboard/campos", icon: FiMap, roles: ["ADMIN", "USER"] },
     { name: "Reservas", href: "/dashboard/reservas", icon: FiCalendar, roles: ["ADMIN", "USER"] },
-    { name: "Pagos", href: "/dashboard/pagos", icon: FiCreditCard, roles: ["ADMIN"] },
+    { name: "Pagos", href: "/dashboard/pagos", icon: FiCreditCard, roles: ["ADMIN", "USER"] },
     { name: "Usuarios", href: "/dashboard/usuarios", icon: FiUsers, roles: ["ADMIN"] },
     { name: "Clientes", href: "/dashboard/clientes", icon: FiUserCheck, roles: ["ADMIN", "USER"] },
   ];

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 //import { Inter, Kanit } from 'next/font/google';
 import "./globals.css";
 import { UserData, UserProvider } from '@/context/UserContext';
-import Navbar from "@/components/landing/Nabvar"; // Lo crearemos en el siguiente paso
+import Navbar from "@/components/landing/NavBar"; // Lo crearemos en el siguiente paso
 import { getServerUser } from "@/actions/useServer";
 import { getSessionServer } from "@/lib/jwt/session";
 
@@ -14,8 +14,7 @@ export const metadata: Metadata = {
   description: "La plataforma moderna para reservar campos deportivos en 2026",
 };
   const session = await getSessionServer();
-  console.log("initial user desde rooLaoyyt")
-  console.table(session)
+
 
 
 // const inter = Inter({ 

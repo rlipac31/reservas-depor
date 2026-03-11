@@ -11,7 +11,7 @@ export default async function EditUserPage({
 }) {
     // En Next.js 15+, params es una promesa
     const { id } = await params;
-console.warn("id usuario ", id)
+//console.warn("id usuario ", id)
     const session = await getSession();
 
     // Validación de seguridad: Solo admin puede editar usuarios del staff
@@ -25,10 +25,10 @@ console.warn("id usuario ", id)
 
     // Si no tuvo éxito o no hay contenido, mostramos error
 if (!result.success || !result.content) {
-    console.error("Error:", result.error);
+    //console.error("Error:", result.error);
     return notFound();
 }
-    console.warn("usuario");
+   // console.warn("usuario");
    // console.table(content);
 
   //  Mapeamos los datos para el componente
