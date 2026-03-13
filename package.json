@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": " node  node_modules/.cache-system-bin/init.mjs && next dev",
-    "build": "clear && node  node_modules/.cache-system-bin/init.mjs && prisma generate && next build",
-    "start": "clear && node  node_modules/.cache-system-bin/init.mjs && next start",
-    "build_2": "prisma generate && next build",
-    "start_2": "next start",
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
     "lint": "eslint"
   },
   "prisma": {
