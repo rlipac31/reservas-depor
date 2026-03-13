@@ -7,7 +7,7 @@ import { decodeJwt } from 'jose';
 export async function getServerUser() {
   const cookieStore = await cookies();
   const allCookies = cookieStore.getAll();
- // console.log("Cookies disponibles en el servidor:", allCookies.map(c => c.name));
+  console.log("Cookies disponibles en el servidor:", allCookies.map(c => c.name));
 
   const token = cookieStore.get('pukllay_session')?.value;
 

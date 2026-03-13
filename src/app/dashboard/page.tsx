@@ -29,8 +29,8 @@ export default function SoccerDashboard() {
         const result:any = await  getDashboardDataAction(force);
         console.warn("data dashboard")
         console.group("data de dashboard")
-        console.table(result.data);
-        console.log(result.data)
+      //  console.table(result.data);
+        //console.log(result.data)
         console.groupEnd();
         if (result.success && result.data) {
             setData(result.data);

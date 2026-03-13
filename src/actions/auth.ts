@@ -50,21 +50,35 @@ export async function loginAction(formData: FormData) {
     email:result.userWithoutPassword?.email
   });
 
-  const cookieStore = await cookies();
+  // const cookieStore = await cookies();
+  // cookieStore.set("pukllay_session", token, {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: "lax",
+  //   maxAge: 60 * 60 * 24 * 7,
+  //   path: "/",
+  // });
+   const cookieStore = await cookies();
+  
   cookieStore.set("pukllay_session", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "none",
+    // En producción (Vercel/Netlify) es true, en local es false
+    secure: process.env.NODE_ENV === "production", 
+    
+    // CAMBIO CLAVE AQUÍ:
+    // 'lax' es el estándar moderno. 'none' solo si tu frontend y backend 
+    // están en dominios totalmente diferentes (ej. app.com y api.com)
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
 
-  
 
   if (result.userWithoutPassword?.role === "ADMIN" || result.userWithoutPassword?.role==='USER'){
        //setTimeout(() =>  redirect("/dashboard"), 3000);
       // redirect(`/dashboard`)
-      revalidatePath(`/dashboard`)
+      redirect(`/dashboard`)
       return { success:true, content:result.userWithoutPassword }
   } 
     redirect("/login");

@@ -1,3 +1,4 @@
+import { getServerUser } from "@/actions/useServer";
 import { getSession } from "@/lib/jwt/auth-utils";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
@@ -100,22 +101,57 @@ export const UserService = {
       
   },
 
-  getMeUser:async()=>{
-    const sesssion =await getSession();
-    const id = sesssion?.id as string;
+  // getMeUser:async()=>{
+  //   const session =await getSession();
+  //   console.log("session de service user ", session);
+  //   const id = session?.id as string;
 
-     try {
+  //    try {
         
+  //   const user = await prisma.users.findUnique({
+  //       where: { id: id },
+  //     });
+  //     if(!user){
+  //       throw new Error("el user con ese id no exite");
+  //     } 
+  //   return user;
+  // } catch (error) {
+  //   console.error("Error al obtener detalle de pago:", error);
+  //   throw new Error("No se pudo cargar la información del pago");
+  // }
+  // }
+
+  getMeUser: async () => {
+  const session = await getSession();
+  console.log("session de service user ", session);
+
+  const id = session?.id;
+
+  // 1. Validación crítica: Si no hay ID, lanzamos error antes de tocar Prisma
+  if (!id) {
+    console.error("No se encontró un ID válido en la sesión");
+    throw new Error("No hay una sesión activa o el ID de usuario es inválido");
+  }
+
+  try {
     const user = await prisma.users.findUnique({
-        where: { id: id },
-      });
-      if(!user){
-        throw new Error("el user con ese id no exite");
-      } 
+      // Ahora estamos seguros de que 'id' es un string real
+      where: { id: id as string },
+    });
+
+    if (!user) {
+      throw new Error("El usuario con ese id no existe");
+    }
+
     return user;
   } catch (error) {
-    console.error("Error al obtener detalle de pago:", error);
-    throw new Error("No se pudo cargar la información del pago");
+    // Evita confundir errores: si el error es el que tú lanzaste, propágalo
+    if (error instanceof Error && error.message.includes("no existe")) {
+      throw error;
+    }
+    
+    console.error("Error al obtener detalle de usuario:", error);
+    throw new Error("Error interno al cargar la información del usuario");
   }
-  }
+}
 };
