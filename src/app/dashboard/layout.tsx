@@ -2,15 +2,19 @@ import { getSession } from "@/lib/jwt/auth-utils";
 import { redirect } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import MobileNavbar from "@/components/layout/MovilNavBar";
+//datos inciiales para  de el perfil del negocio
+import { initializeDatabase } from '@/lib/business/init';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session:any = await getSession();
+  // Se ejecuta al cargar la app en el servidor
+  await initializeDatabase();
 
   // Si no hay sesión o el rol no es válido, fuera.
   if (!session || (session.role !== "ADMIN" && session.role !== "USER")) {
     redirect("/unauthorized");
   }
- // console.log("sessin ", session )
+ console.log("sessin ", session )
 
 
 

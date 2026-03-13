@@ -7,14 +7,16 @@ import { FiMenu, FiX, FiLogOut } from "react-icons/fi";
 import { logout } from '@/actions/auth';
 import { useRouter } from "next/navigation";
 
-// Importamos los mismos iconos que usas en tu Sidebar
+import { GiSoccerField } from "react-icons/gi";
 import { 
-  FiMap, 
-  FiCalendar, 
-  FiCreditCard, 
-  FiUsers, 
-  FiUserCheck 
-} from "react-icons/fi";
+  CalendarDays, 
+  CreditCard, 
+  Users, 
+  BookUser, 
+  LayoutDashboard,
+  Settings
+} from "lucide-react";
+
 
 interface NavbarProps {
   userRole: "ADMIN" | "USER";
@@ -25,12 +27,15 @@ export default function MobileNavbar({ userRole }: NavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
+
   const menuItems = [
-    { name: "Campos", href: "/dashboard/campos", icon: FiMap, roles: ["ADMIN", "USER"] },
-    { name: "Reservas", href: "/dashboard/reservas", icon: FiCalendar, roles: ["ADMIN", "USER"] },
-    { name: "Pagos", href: "/dashboard/pagos", icon: FiCreditCard, roles: ["ADMIN", "USER"] },
-    { name: "Usuarios", href: "/dashboard/usuarios", icon: FiUsers, roles: ["ADMIN"] },
-    { name: "Clientes", href: "/dashboard/clientes", icon: FiUserCheck, roles: ["ADMIN", "USER"] },
+    { name: "Dashoboard", href: "/dashboard", icon: LayoutDashboard, roles: ["ADMIN", "USER"] },
+    { name: "Campos", href: "/dashboard/campos", icon: GiSoccerField , roles: ["ADMIN", "USER"] },
+    { name: "Reservas", href: "/dashboard/reservas", icon: CalendarDays, roles: ["ADMIN", "USER"] },
+    { name: "Pagos", href: "/dashboard/pagos", icon: CreditCard, roles:["ADMIN", "USER"] },
+    { name: "Usuarios", href: "/dashboard/usuarios", icon: Users, roles: ["ADMIN"] },
+    { name: "Clientes", href: "/dashboard/clientes", icon: BookUser, roles: ["ADMIN", "USER"] },
+    { name: "Configuracion", href: "/dashboard/configuracion", icon: Settings, roles: ["ADMIN"] },
   ];
 
   const handleLogout = async () => {

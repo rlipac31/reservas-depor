@@ -8,7 +8,8 @@ import {
   CreditCard, 
   Users, 
   BookUser, 
-  LayoutDashboard
+  LayoutDashboard,
+  Settings
 } from "lucide-react";
 
 import { logout } from '@/actions/auth';
@@ -28,6 +29,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
     { name: "Pagos", href: "/dashboard/pagos", icon: CreditCard, roles:["ADMIN", "USER"] },
     { name: "Usuarios", href: "/dashboard/usuarios", icon: Users, roles: ["ADMIN"] },
     { name: "Clientes", href: "/dashboard/clientes", icon: BookUser, roles: ["ADMIN", "USER"] },
+    { name: "Configuracion", href: "/dashboard/configuracion", icon: Settings, roles: ["ADMIN"] },
   ];
 
  const handleLogout = async()=>{
@@ -41,7 +43,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
     <aside className="w-50 lg:w-64 h-screen sticky top-0 bg-brand-primary flex flex-col shadow-2xl text-brand-white z-50">
       
       {/* Logo con Padding Superior */}
-      <div className="pt-12 pb-10 px-8">
+      <div className="pt-6 pb-5 px-8">
         <h2 className="text-2xl font-black tracking-tighter text-brand-accent italic uppercase">
           PUKLLAY
         </h2>
@@ -72,7 +74,7 @@ export default function Sidebar({ userRole }: SidebarProps) {
       </nav>
 
       {/* Footer del Sidebar: Botón Salir */}
-      <div className="p-6 border-t border-brand-white/5 bg-brand-primary/50">
+      <div className="px-6 py-2 border-t border-brand-white/5 bg-brand-primary/50">
         <button 
         onClick={handleLogout}
         className="flex items-center gap-4 px-6 py-4 w-full rounded-2xl font-black text-xs uppercase tracking-widest text-red-400 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/20">

@@ -20,18 +20,7 @@ export default function NuevoCampoPage() {
 
 
   const router = useRouter();
- // const searchParams = useSearchParams(); // Hook para capturar parámetros en el cliente
-//const businessId = searchParams.get("businessId"); // Obtenemos el valor de ?businessId=..
-//  const { user } = useUser(); // Es vital saber si está cargando.
 
-
-//   const slug = user?.slug;
-// // Validación de seguridad (Corregida para el Build)
-//   useEffect(() => {
-//     if (user && user.role !== 'ADMIN') {
-//       router.push(`/${user.slug}/unauthorized`);
-//     }
-//   }, [user, router]);
 
 
 
