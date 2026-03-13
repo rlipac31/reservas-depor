@@ -54,7 +54,7 @@ export async function loginAction(formData: FormData) {
   cookieStore.set("pukllay_session", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    sameSite: "none",
     maxAge: 60 * 60 * 24 * 7,
     path: "/",
   });
